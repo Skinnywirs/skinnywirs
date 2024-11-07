@@ -182,7 +182,7 @@ Ingat, disini kami selalu ada untuk ndu. Bukan hanya disaat bahagia, melainkan d
 
     function bukaWa() {
         const wish = document.getElementById('wish').innerText; // Mengambil ucapan ulang tahun
-        const waMessage = encodeURIComponent(wish);  // Encoding pesan agar bisa dikirim melalui WhatsApp
+        const waMessage = ``;  // Encoding pesan agar bisa dikirim melalui WhatsApp
         const waLink = `https://api.whatsapp.com/send?phone=+6285761924097&text=${waMessage}`;
         window.location = waLink;
     }
