@@ -2,91 +2,138 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Website Ulang Tahun</title>
+  <title>Skinnywirs © 2025</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #fbeaff;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-    }
-    .page {
-      display: none;
-      text-align: center;
-      z-index: 1;
-    }
-    .active {
-      display: block;
-    }
-    input, button {
-      padding: 10px;
-      margin-top: 15px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-    }
-    button {
-      background-color: #6c5ce7;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #341f97;
-    }
-    #confetti-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-    }
-    video {
-      width: 80%;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-    /* Pesan */
-    #fontText {
-      font-size: 28px;
-      font-weight: bold;
-      transition: font-family 0.2s ease-in-out, color 0.2s ease-in-out;
-    }
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+  /* Wallpaper */
+  background: url("bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+.page {
+  display: none;
+  text-align: center;
+  width: 90%;          /* supaya ada margin di HP */
+  max-width: 600px;    /* di laptop tidak terlalu lebar */
+  margin: 50px auto;
+  z-index: 1;
+}
+
+.page.active {
+  display: block;
+}
+
+input, button {
+  width: 80%;           /* lebar fleksibel */
+  max-width: 400px;
+  padding: 12px;
+  margin-top: 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  background-color: #6c5ce7;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #341f97;
+}
+
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Video portrait 9:16 */
+#page5 video {
+  width: auto;
+  height: 70vh;
+  max-height: 80vh;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  display: block;
+  margin: 0 auto;
+}
+
+/* Pesan animasi font */
+#fontText {
+  font-size: 5vw;   /* ukuran font otomatis menyesuaikan layar */
+  font-weight: bold;
+  transition: font-family 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+/* MEDIA QUERIES untuk HP dan tablet */
+@media only screen and (max-width: 768px) {
+  .page {
+    margin-top: 30px;
+  }
+  input, button {
+    width: 90%;
+    font-size: 18px;
+    padding: 14px;
+  }
+  #fontText {
+    font-size: 6vw;
+  }
+  #page5 video {
+    height: 60vh;
+  }
+}
+
   </style>
 </head>
+
 <body>
   <!-- Halaman 1 -->
   <div id="page1" class="page active">
-    <h2>Masukkan Nama Lengkap</h2>
-    <input type="text" id="nama" placeholder="Nama lengkap...">
+    <h2>atas nama siapa kak?</h2>
+    <input type="text" id="nama" placeholder="...">
     <br>
-    <button onclick="nextPage(2)">Kirim</button>
+    <button onclick="goToPage2()">Kirim</button>
   </div>
 
   <!-- Halaman 2 -->
   <div id="page2" class="page">
-    <h2>Masukkan Kata Sandi</h2>
-    <input type="password" id="sandi" placeholder="Kata sandi...">
+    <h2 id="greeting"></h2>
+    <p>(10×2)+1−2+3</p>
+    <input type="password" id="sandi" placeholder="...">
     <br>
-    <button onclick="nextPage(3)">Kirim</button>
+    <button onclick="checkPassword()">Kirim</button>
   </div>
 
   <!-- Halaman 3 -->
   <div id="page3" class="page">
-    <h2 id="fontText">Ada pesan untukmu</h2>
+    <h2 id="fontText">ada pesan untukmu, <span id="namaPesan"></span></h2>
     <button onclick="nextPage(4)">Lanjut</button>
   </div>
 
   <!-- Halaman 4 -->
   <div id="page4" class="page">
-    <h1>🎉 Selamat Ulang Tahun 🎂</h1>
-    <p>Semoga panjang umur, sehat selalu, dan penuh kebahagiaan!</p>
+    <h1>22 September</h1>
+    <h2>Happy Birthday Sep!</h2>
+    <p>panjang umur yaa, sehat selalu, murah rezekii, makin cantik dan chubby hehe, semoga segera wisuda </p>
+    <p>diberkati Tuhan km dan juga keluarga duu, apapun yg km doakan sekarang semoga di kabulkan Tuhan yaa</p>
+    <p>semoga dapat cowokk wkwk, selalu jadi alayy yaa, biar bisa di undang ke vindes trus ketemu vincent rompies wkwk</p>
+    <p>jgn lupakan teman du yg ganteng, cool, keren dan ga alay ini yaa hehe.</p>
+    <p>Bahagia selaluuu seppp, selalu bersyukur yaa. Sekali lagi selamatt ulang tahun Tuhan memberkatimuuuu💫💫</p>
     <button onclick="nextPage(5)">Lanjut</button>
     <canvas id="confetti-canvas"></canvas>
     <audio id="music" autoplay loop>
@@ -103,13 +150,57 @@
     </video>
   </div>
 
+  <!-- Script -->
   <script>
+    function goToPage2() {
+      const nama = document.getElementById("nama").value.trim();
+      if (nama === "") {
+        alert("Nama tidak boleh kosong!");
+        return;
+      }
+      localStorage.setItem("namaUser", nama);
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page2').classList.add('active');
+      document.getElementById("greeting").innerText = "uceiii " + nama + "!!";
+    }
+
+    function checkPassword() {
+      const sandi = document.getElementById("sandi").value;
+      if (sandi === "22") {
+        nextPage(3);
+      } else {
+        alert("⚠️ Kata sandi salah, coba lagi!");
+      }
+    }
+
+    // Font loop di halaman 3
+    let fontInterval;
+    function startFontLoop() {
+      const fonts = ["Arial", "Verdana", "Courier New", "Georgia", "Comic Sans MS", "Impact", "Tahoma", "Trebuchet MS"];
+      const colors = ["#d63031", "#0984e3", "#00b894", "#fdcb6e", "#6c5ce7", "#e84393"];
+      const fontEl = document.getElementById("fontText");
+      let fontIndex = 0;
+
+      if (fontInterval) clearInterval(fontInterval);
+
+      fontInterval = setInterval(() => {
+        fontIndex = (fontIndex + 1) % fonts.length;
+        fontEl.style.fontFamily = fonts[fontIndex];
+        fontEl.style.color = colors[Math.floor(Math.random() * colors.length)];
+      }, 400);
+    }
+
     // Navigasi antar halaman
     function nextPage(num) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page' + num).classList.add('active');
 
-      // Musik & confetti di halaman 4
+      if (num === 3) {
+        const namaUser = localStorage.getItem("namaUser") || "";
+        document.getElementById("namaPesan").innerText = namaUser;
+        startFontLoop();
+      }
+
       if (num === 4) {
         let music = document.getElementById("music");
         music.play().catch(()=>{});
@@ -117,69 +208,76 @@
       }
     }
 
-    // Confetti animasi
+    // Confetti di halaman 4 (hanya setengah layar)
     function startConfetti() {
-      const canvas = document.getElementById("confetti-canvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+  const canvas = document.getElementById("confetti-canvas");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
-      const confettis = [];
-      const colors = ["#ff7675", "#74b9ff", "#55efc4", "#ffeaa7", "#fd79a8", "#a29bfe"];
+  const confettis = [];
+  const colors = ["#ff7675", "#74b9ff", "#55efc4", "#ffeaa7", "#fd79a8", "#a29bfe"];
 
-      for (let i = 0; i < 100; i++) {
-        confettis.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height - canvas.height,
-          size: 5 + Math.random() * 8,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          speedY: 2 + Math.random() * 3,
-          speedX: (Math.random() - 0.5) * 2,
-          rotation: Math.random() * 360,
-          rotationSpeed: (Math.random() - 0.5) * 10
-        });
+  for (let i = 0; i < 120; i++) { // jumlah confetti (bisa ditambah/dikurangi)
+    confettis.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      size: 2 + Math.random() * 4, // <<< ukuran lebih kecil
+      color: colors[Math.floor(Math.random() * colors.length)],
+      speedY: 2 + Math.random() * 3,
+      speedX: (Math.random() - 0.5) * 2,
+      rotation: Math.random() * 360,
+      rotationSpeed: (Math.random() - 0.5) * 10
+    });
+  }
+
+  function drawConfetti(c) {
+    ctx.save();
+    ctx.translate(c.x, c.y);
+    ctx.rotate(c.rotation * Math.PI / 180);
+    ctx.fillStyle = c.color;
+    ctx.fillRect(-c.size/2, -c.size/2, c.size, c.size);
+    ctx.restore();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let c of confettis) {
+      c.y += c.speedY;
+      c.x += c.speedX;
+      c.rotation += c.rotationSpeed;
+
+      // hanya sampai setengah layar
+      if (c.y > canvas.height / 2) {
+        c.y = -10;
+        c.x = Math.random() * canvas.width;
       }
 
-      function drawConfetti(c) {
-        ctx.save();
-        ctx.translate(c.x, c.y);
-        ctx.rotate(c.rotation * Math.PI / 180);
-        ctx.fillStyle = c.color;
-        ctx.fillRect(-c.size/2, -c.size/2, c.size, c.size);
-        ctx.restore();
-      }
-
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        for (let c of confettis) {
-          c.y += c.speedY;
-          c.x += c.speedX;
-          c.rotation += c.rotationSpeed;
-
-          if (c.y > canvas.height) {
-            c.y = -10;
-            c.x = Math.random() * canvas.width;
-          }
-
-          drawConfetti(c);
-        }
-        requestAnimationFrame(animate);
-      }
-      animate();
+      drawConfetti(c);
     }
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
 
-    // Ganti font (dan warna) untuk "Ada pesan untukmu"
-    const fonts = ["Arial", "Verdana", "Courier New", "Georgia", "Comic Sans MS", "Impact", "Tahoma", "Trebuchet MS"];
-    const colors = ["#d63031", "#0984e3", "#00b894", "#fdcb6e", "#6c5ce7", "#e84393"];
-    const fontEl = document.getElementById("fontText");
-    let fontIndex = 0;
-
-    setInterval(() => {
-      fontIndex = (fontIndex + 1) % fonts.length;
-      fontEl.style.fontFamily = fonts[fontIndex];
-      fontEl.style.color = colors[Math.floor(Math.random() * colors.length)];
-    }, 400); // ganti font & warna tiap 0.4 detik
   </script>
+
+  <style>
+    .page {
+      display: none;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .page.active {
+      display: block;
+    }
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+  </style>
 </body>
+
 </html>
