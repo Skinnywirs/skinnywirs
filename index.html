@@ -8,24 +8,21 @@
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  overflow-x: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
 
-  /* Wallpaper */
+  /* wallpaper */
   background: url("bg.jpg") no-repeat center center fixed;
   background-size: cover;
+
+  overflow-x: hidden;
 }
 
 .page {
   display: none;
   text-align: center;
-  width: 90%;          /* supaya ada margin di HP */
-  max-width: 600px;    /* di laptop tidak terlalu lebar */
-  margin: 50px auto;
-  z-index: 1;
+  width: 90%;        /* lebar fleksibel */
+  max-width: 600px;  /* tidak terlalu lebar di laptop */
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .page.active {
@@ -33,7 +30,7 @@
 }
 
 input, button {
-  width: 80%;           /* lebar fleksibel */
+  width: 90%;       /* fleksibel di HP */
   max-width: 400px;
   padding: 12px;
   margin-top: 15px;
@@ -52,14 +49,11 @@ button:hover {
   background-color: #341f97;
 }
 
-#confetti-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+/* Pesan animasi font */
+#fontText {
+  font-size: 6vw;  /* ukuran otomatis mengikuti lebar layar */
+  font-weight: bold;
+  transition: font-family 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 /* Video portrait 9:16 */
@@ -73,30 +67,24 @@ button:hover {
   margin: 0 auto;
 }
 
-/* Pesan animasi font */
-#fontText {
-  font-size: 5vw;   /* ukuran font otomatis menyesuaikan layar */
-  font-weight: bold;
-  transition: font-family 0.2s ease-in-out, color 0.2s ease-in-out;
-}
-
-/* MEDIA QUERIES untuk HP dan tablet */
+/* Media queries untuk HP/tablet */
 @media only screen and (max-width: 768px) {
-  .page {
-    margin-top: 30px;
-  }
-  input, button {
-    width: 90%;
-    font-size: 18px;
-    padding: 14px;
+  body {
+    background-size: cover;
   }
   #fontText {
-    font-size: 6vw;
+    font-size: 7vw;
+  }
+  input, button {
+    width: 95%;
+    font-size: 18px;
+    padding: 14px;
   }
   #page5 video {
     height: 60vh;
   }
 }
+
 
   </style>
 </head>
