@@ -1,191 +1,185 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ucapan Selamat Ulang Tahun</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-image: url('https://getwallpapers.com/wallpaper/full/6/3/6/1293083-widescreen-stars-hd-wallpapers-1920x1080.jpg'); 
-            background-size: cover;
-            background-position: center;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.8); 
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            width: 100%;
-            overflow: hidden;
-        }
-        .hidden {
-            display: none;
-        }
-        .whatsapp-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #25D366; /* Warna WhatsApp */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .whatsapp-button:hover {
-            background-color: #128C7E; /* Warna saat hover */
-        }
-        #birthdayVideo {
-            margin-top: 20px;
-            width: 80%; /* Membuat video lebih kecil agar tidak memenuhi seluruh lebar */
-            max-width: 500px; /* Ukuran maksimal video */
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Menambahkan bayangan untuk efek */
-        }
-        #audioPlayer {
-            margin-top: 20px;
-            width: 80%; /* Menyesuaikan ukuran audio player */
-            max-width: 500px; /* Ukuran maksimal player */
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Website Ulang Tahun</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #fbeaff;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    .page {
+      display: none;
+      text-align: center;
+      z-index: 1;
+    }
+    .active {
+      display: block;
+    }
+    input, button {
+      padding: 10px;
+      margin-top: 15px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      background-color: #6c5ce7;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #341f97;
+    }
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    video {
+      width: 80%;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    /* Pesan */
+    #fontText {
+      font-size: 28px;
+      font-weight: bold;
+      transition: font-family 0.2s ease-in-out, color 0.2s ease-in-out;
+    }
+  </style>
 </head>
 <body>
+  <!-- Halaman 1 -->
+  <div id="page1" class="page active">
+    <h2>Masukkan Nama Lengkap</h2>
+    <input type="text" id="nama" placeholder="Nama lengkap...">
+    <br>
+    <button onclick="nextPage(2)">Kirim</button>
+  </div>
 
-<div class="container">
-    <div id="nameInput">
-        <h2>Masukkan Nama Lengkap:</h2>
-        <input type="text" id="name" placeholder="Nama Anda">
-        <button onclick="showPasswordInput()">Lanjut</button>
-    </div>
-    
-    <div id="passwordInput" class="hidden">
-        <h2>Masukkan Password:</h2>
-        <h3><i>clue; cabor-porseni-hujan-menang *ditulis dengan huruf kapital</i></h3>
-        <input type="password" id="password" placeholder="Password Anda">
-        <button onclick="showMessageInput()">Kirim</button>
-    </div>
-    
-    <div id="messageInput" class="hidden">
-        <h2>ada sebuah pesan untuk ndu:</h2>
-        <button onclick="showBirthdayMessage()">Lanjut</button>
-    </div>
+  <!-- Halaman 2 -->
+  <div id="page2" class="page">
+    <h2>Masukkan Kata Sandi</h2>
+    <input type="password" id="sandi" placeholder="Kata sandi...">
+    <br>
+    <button onclick="nextPage(3)">Kirim</button>
+  </div>
 
-    <div id="birthdayMessage" class="hidden">
-        <h2 id="message"></h2>
-        <p id="wish"></p>
-        <button onclick="showVideoAndAudio()">klik...</button>
-    </div>
+  <!-- Halaman 3 -->
+  <div id="page3" class="page">
+    <h2 id="fontText">Ada pesan untukmu</h2>
+    <button onclick="nextPage(4)">Lanjut</button>
+  </div>
 
-    <div id="videoAndAudio" class="hidden">
-        <!-- Video diletakkan terlebih dahulu -->
-        <video id="birthdayVideo" controls>
-            <source id="videoSource" src="" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        
-        <!-- Audio player diletakkan di bawah video -->
-        <audio id="audioPlayer" controls>
-            <source id="audioSource" src="" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
+  <!-- Halaman 4 -->
+  <div id="page4" class="page">
+    <h1>🎉 Selamat Ulang Tahun 🎂</h1>
+    <p>Semoga panjang umur, sehat selalu, dan penuh kebahagiaan!</p>
+    <button onclick="nextPage(5)">Lanjut</button>
+    <canvas id="confetti-canvas"></canvas>
+    <audio id="music" autoplay loop>
+      <source src="happy-birthday.mp3" type="audio/mpeg">
+    </audio>
+  </div>
 
-        <br>
-        <button onclick="showWhatsApp()">Lanjut</button>
-        <button onclick="hideVideoAndAudio()">Kembali</button>
-    </div>
+  <!-- Halaman 5 -->
+  <div id="page5" class="page">
+    <h2>Galeri Video 🎥</h2>
+    <video autoplay muted loop>
+      <source src="video.mp4" type="video/mp4">
+      Browser kamu tidak mendukung video.
+    </video>
+  </div>
 
-    <div id="whatsappMessage" class="hidden">
-        <h2>kalau keadaan ndu sedang tidak baik-baik saja dan butuh ruang untuk didengarkan, jangan pernah sungkan buat cerita ke abang ya..</h2>
-        <button class="whatsapp-button" onclick="bukaWa()">Kirim Pesan</button>
-        <button class="whatsapp-button" onclick="hideWhatsApp()">Kembali</button>
-    </div>
-</div>
+  <script>
+    // Navigasi antar halaman
+    function nextPage(num) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + num).classList.add('active');
 
-<script>
-    function showPasswordInput() {
-        const name = document.getElementById('name').value;
-        if (name) {
-            document.getElementById('nameInput').classList.add('hidden');
-            document.getElementById('passwordInput').classList.remove('hidden');
-        } else {
-            alert('Masukkan nama terlebih dahulu.');
+      // Musik & confetti di halaman 4
+      if (num === 4) {
+        let music = document.getElementById("music");
+        music.play().catch(()=>{});
+        startConfetti();
+      }
+    }
+
+    // Confetti animasi
+    function startConfetti() {
+      const canvas = document.getElementById("confetti-canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const confettis = [];
+      const colors = ["#ff7675", "#74b9ff", "#55efc4", "#ffeaa7", "#fd79a8", "#a29bfe"];
+
+      for (let i = 0; i < 100; i++) {
+        confettis.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          size: 5 + Math.random() * 8,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          speedY: 2 + Math.random() * 3,
+          speedX: (Math.random() - 0.5) * 2,
+          rotation: Math.random() * 360,
+          rotationSpeed: (Math.random() - 0.5) * 10
+        });
+      }
+
+      function drawConfetti(c) {
+        ctx.save();
+        ctx.translate(c.x, c.y);
+        ctx.rotate(c.rotation * Math.PI / 180);
+        ctx.fillStyle = c.color;
+        ctx.fillRect(-c.size/2, -c.size/2, c.size, c.size);
+        ctx.restore();
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let c of confettis) {
+          c.y += c.speedY;
+          c.x += c.speedX;
+          c.rotation += c.rotationSpeed;
+
+          if (c.y > canvas.height) {
+            c.y = -10;
+            c.x = Math.random() * canvas.width;
+          }
+
+          drawConfetti(c);
         }
+        requestAnimationFrame(animate);
+      }
+      animate();
     }
 
-    function showMessageInput() {
-        const password = document.getElementById('password').value;
+    // Ganti font (dan warna) untuk "Ada pesan untukmu"
+    const fonts = ["Arial", "Verdana", "Courier New", "Georgia", "Comic Sans MS", "Impact", "Tahoma", "Trebuchet MS"];
+    const colors = ["#d63031", "#0984e3", "#00b894", "#fdcb6e", "#6c5ce7", "#e84393"];
+    const fontEl = document.getElementById("fontText");
+    let fontIndex = 0;
 
-        // Ganti "PETANQUE" dengan password yang Anda inginkan
-        if (password === "123456") {
-            document.getElementById('passwordInput').classList.add('hidden');
-            document.getElementById('messageInput').classList.remove('hidden');
-        } else {
-            alert('Password salah!');
-        }
-    }
-
-    function showBirthdayMessage() {
-        const name = document.getElementById('name').value;
-        document.getElementById('messageInput').classList.add('hidden');
-        document.getElementById('birthdayMessage').classList.remove('hidden');
-        document.getElementById('message').innerText = `Selamat Ulang Tahun, ${name}!`;
-
-        // Wish ulang tahun yang baru
-        const wish = `Mungkin perayaan di hari ini adalah perayaan berulang yang kam rayakan di setiap tahunnya. 
-Tapi, perayaan kali ini bukan hanya sekedar perayaan angka, melainkan perayaan atas segala pencapaian yang telah kam raih. 
-Kam hebat bisa bertahan dan berdiri sendiri sampai sejauh ini. 
-Di usia ndu yang bertambah ini, sambutlah dengan penuh harapan dan juga sambutlah dengan penuh kebahagiaan. 
-Percayalah, banyak doa yang dipanjatkan untukndu agar kam selalu bertumbuh menjadi manusia yang lebih baik lagi, banyak doa yang mengharapkan agar kam tetap memancarkan cahaya kehangatan bagi orang-orang yang ada di sekitarndu, semoga keberkahan selalu menyertaindu dalam setiap langkah.
-Ingat, disini kami selalu ada untuk ndu. Bukan hanya disaat bahagia, melainkan disaat terpuruk ndu juga.`;
-
-        document.getElementById('wish').innerText = wish;
-    }
-
-    function showVideoAndAudio() {
-        // Menampilkan video dan audio setelah tombol "klik..." diklik
-        document.getElementById('birthdayMessage').classList.add('hidden');
-        document.getElementById('videoAndAudio').classList.remove('hidden');
-
-        // Menambahkan video
-        document.getElementById('birthdayVideo').src = "lv_7242356884181634306_20241107173347.mp4";  // Ganti dengan URL video
-        document.getElementById('birthdayVideo').load();  // Memuat ulang video
-        
-        // Menambahkan audio
-        document.getElementById('audioSource').src = "wwd.mp3juice.blog - Pamungkas - Happy Birthday To You (Official Lyrics Video).mp3";  // Ganti dengan URL file audio
-        document.getElementById('audioPlayer').load();  // Memuat ulang sumber audio
-        document.getElementById('audioPlayer').play();  // Memutar audio
-    }
-
-    function hideVideoAndAudio() {
-        document.getElementById('videoAndAudio').classList.add('hidden');
-        document.getElementById('birthdayMessage').classList.remove('hidden');
-    }
-
-    function showWhatsApp() {
-        document.getElementById('videoAndAudio').classList.add('hidden');
-        document.getElementById('whatsappMessage').classList.remove('hidden');
-    }
-
-    function hideWhatsApp() {
-        document.getElementById('whatsappMessage').classList.add('hidden');
-        document.getElementById('videoAndAudio').classList.remove('hidden');
-    }
-
-    function bukaWa() {
-        const wish = document.getElementById('wish').innerText; // Mengambil ucapan ulang tahun
-        const waMessage = ``;  // Encoding pesan agar bisa dikirim melalui WhatsApp
-        const waLink = `https://api.whatsapp.com/send?phone=+6285761924097&text=${waMessage}`;
-        window.location = waLink;
-    }
-</script>
-
+    setInterval(() => {
+      fontIndex = (fontIndex + 1) % fonts.length;
+      fontEl.style.fontFamily = fonts[fontIndex];
+      fontEl.style.color = colors[Math.floor(Math.random() * colors.length)];
+    }, 400); // ganti font & warna tiap 0.4 detik
+  </script>
 </body>
 </html>
