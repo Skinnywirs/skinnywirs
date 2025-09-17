@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <title>Skinnywirs © 2025</title>
   <style>
-    body {
+    /* Meta viewport di <head> */
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
 
-  /* wallpaper */
   background: url("bg.jpg") no-repeat center center fixed;
   background-size: cover;
 
@@ -20,7 +22,7 @@
   display: none;
   text-align: center;
   width: 100%;
-  max-width: 420px;  /* mirip ukuran HP portrait */
+  max-width: 420px; /* Lebar HP portrait */
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
@@ -57,15 +59,27 @@ button:hover {
   transition: font-family 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
-/* Canvas confetti full screen */
-#confetti-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
+/* Video portrait 9:16 */
+#page5 video {
+  width: auto;
+  height: 75vh;
+  max-height: 80vh;
+  border-radius: 16px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* Responsive untuk tablet */
+@media only screen and (min-width: 421px) and (max-width: 768px) {
+  #fontText { font-size: 5vw; }
+  #page5 video { height: 70vh; }
+}
+
+/* Responsive untuk desktop */
+@media only screen and (min-width: 769px) {
+  #fontText { font-size: 28px; }
+  #page5 video { height: 60vh; }
 }
 
   </style>
