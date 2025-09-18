@@ -22,7 +22,6 @@
       padding: 20px;
       box-sizing: border-box;
 
-      /* Semua halaman di tengah layar */
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -30,7 +29,6 @@
       align-items: center;
     }
 
-    /* Semua halaman disembunyikan kecuali yang aktif */
     .page:not(.active) {
       display: none;
     }
@@ -53,7 +51,7 @@
     button:hover { background-color: #341f97; }
 
     #fontText {
-      font-size: 6vw; /* responsif di HP */
+      font-size: 6vw;
       font-weight: bold;
       transition: font-family 0.2s ease-in-out, color 0.2s ease-in-out;
     }
@@ -68,13 +66,11 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
-    /* Tablet */
     @media only screen and (min-width: 421px) and (max-width: 768px) {
       #fontText { font-size: 5vw; }
       #page5 video { height: 70vh; }
     }
 
-    /* Desktop */
     @media only screen and (min-width: 769px) {
       #fontText { font-size: 28px; }
       #page5 video { height: 60vh; }
@@ -83,7 +79,7 @@
     canvas {
       position: fixed;
       top: 0; left: 0;
-      width: 100%; height: 50%; /* hanya setengah layar */
+      width: 100%; height: 50%;
       pointer-events: none;
     }
   </style>
@@ -126,14 +122,14 @@
     <button onclick="nextPage(5)">Lanjut</button>
     <canvas id="confetti-canvas"></canvas>
     <audio id="music" autoplay loop>
-      <source src="wwd.mp3juice.blog - Pamungkas - Happy Birthday To You (Official Lyrics Video).mp3" type="audio/mpeg">
+      <source src="wwd.mp3" type="audio/mpeg">
     </audio>
   </div>
 
   <!-- Halaman 5: Video -->
   <div id="page5" class="page">
     <h2>Pesan Khusus Untukmu 🎥</h2>
-    <video controls autoplay>
+    <video id="video" controls autoplay muted playsinline>
       <source src="lv_0_20250913172908 (1).mp4" type="video/mp4">
       Browsermu tidak mendukung video.
     </video>
@@ -178,7 +174,7 @@
     const canvas = document.getElementById("confetti-canvas");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight / 2; // setengah layar
+    canvas.height = window.innerHeight / 2;
 
     let stars = [];
     for (let i = 0; i < 80; i++) {
@@ -222,7 +218,6 @@
 
     loop();
 
-    // stop setelah 10 detik
     setTimeout(() => {
       running = false;
       cancelAnimationFrame(animationId);
@@ -248,6 +243,24 @@
       music.play().catch(() => {
         console.log("Autoplay musik diblokir, butuh interaksi user.");
       });
+    }
+
+    if (num === 5) {
+      // stop musik
+      const music = document.getElementById("music");
+      if (music) {
+        music.pause();
+        music.currentTime = 0;
+      }
+
+      // play video
+      const video = document.getElementById("video");
+      if (video) {
+        video.muted = false; // bunyikan
+        video.play().catch(() => {
+          console.log("Autoplay video diblokir, user perlu klik play.");
+        });
+      }
     }
   }
 </script>
