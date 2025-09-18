@@ -96,7 +96,6 @@
 
   <!-- Halaman 2: Password -->
   <div id="page2" class="page">
-    <h2>pemanasan otak dulu ya kak!</h2>
     <h2>(10×2)+1−2+3</h2>
     <input type="password" id="sandi" placeholder="...">
     <br>
@@ -169,7 +168,7 @@
     }, 700);
   }
 
-  // Confetti bintang (jalan 10 detik)
+  // Confetti bintang dari samping ke tengah
   function startConfetti() {
     const canvas = document.getElementById("confetti-canvas");
     const ctx = canvas.getContext("2d");
@@ -177,12 +176,18 @@
     canvas.height = window.innerHeight / 2;
 
     let stars = [];
-    for (let i = 0; i < 80; i++) {
+    const totalStars = 80;
+
+    // buat bintang muncul dari kiri & kanan
+    for (let i = 0; i < totalStars; i++) {
+      const fromLeft = i % 2 === 0; // selang-seling kiri-kanan
       stars.push({
-        x: Math.random() * canvas.width,
+        x: fromLeft ? 0 : canvas.width,
         y: Math.random() * canvas.height,
         size: Math.random() * 3 + 2,
-        speed: Math.random() * 1 + 0.5
+        speedX: fromLeft ? (Math.random() * 2 + 1) : -(Math.random() * 2 + 1),
+        speedY: (Math.random() - 0.5) * 2,
+        color: ["yellow","red","blue","purple","orange"][Math.floor(Math.random()*5)]
       });
     }
 
@@ -191,9 +196,9 @@
 
     function drawStars() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "yellow";
       stars.forEach(star => {
         ctx.beginPath();
+        ctx.fillStyle = star.color;
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
         ctx.fill();
       });
@@ -201,11 +206,8 @@
 
     function updateStars() {
       stars.forEach(star => {
-        star.y += star.speed;
-        if (star.y > canvas.height) {
-          star.y = 0;
-          star.x = Math.random() * canvas.width;
-        }
+        star.x += star.speedX;
+        star.y += star.speedY;
       });
     }
 
@@ -218,10 +220,19 @@
 
     loop();
 
+    // Stop setelah 10 detik dengan fade out smooth
     setTimeout(() => {
       running = false;
       cancelAnimationFrame(animationId);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      canvas.style.transition = "opacity 2s ease-out";
+      canvas.style.opacity = "0";
+
+      setTimeout(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.style.opacity = "1"; // reset
+        canvas.style.transition = "";
+      }, 2000);
     }, 10000);
   }
 
@@ -238,7 +249,7 @@
     }
 
     if (num === 4) {
-      startConfetti();
+      startConfetti(); // langsung mulai confetti
       const music = document.getElementById("music");
       music.play().catch(() => {
         console.log("Autoplay musik diblokir, butuh interaksi user.");
@@ -256,7 +267,7 @@
       // play video
       const video = document.getElementById("video");
       if (video) {
-        video.muted = false; // bunyikan
+        video.muted = false;
         video.play().catch(() => {
           console.log("Autoplay video diblokir, user perlu klik play.");
         });
