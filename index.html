@@ -15,16 +15,25 @@
     }
 
     .page {
-      display: none;
       text-align: center;
       width: 100%;
-      max-width: 420px; /* Lebar pas HP portrait */
+      max-width: 420px;
       margin: 0 auto;
       padding: 20px;
       box-sizing: border-box;
+
+      /* Semua halaman di tengah layar */
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
-    .page.active { display: block; }
+    /* Semua halaman disembunyikan kecuali yang aktif */
+    .page:not(.active) {
+      display: none;
+    }
 
     input, button {
       width: 90%;
@@ -101,14 +110,14 @@
   <!-- Halaman 3: Pesan -->
   <div id="page3" class="page">
     <h2 id="fontText">ada pesan untukmu</h2>
-    <h3 id="namaPesan">wa</h3>
+    <h3 id="namaPesan"></h3>
     <button onclick="nextPage(4)">Lanjut</button>
   </div>
 
   <!-- Halaman 4: Ucapan -->
   <div id="page4" class="page">
     <h1>22 September</h1>
-     <h2>Happy Birthday Sep!</h2>
+    <h2>Happy Birthday Sep!</h2>
     <p>panjang umur yaa, sehat selalu, murah rezekii, makin cantik dan chubby hehe, semoga segera wisuda dan mendapat kerjaan yg km inginkan,</p>
     <p>diberkati Tuhan km dan juga keluarga duu, apapun yg km doakan sekarang semoga di kabulkan Tuhan yaa,</p>
     <p>semoga dapat cowokk wkwk, selalu jadi alayy yaa, biar bisa di undang ke vindes trus ketemu vincent rompies wkwk</p>
@@ -145,7 +154,7 @@
   // Cek sandi
   function cekSandi() {
     const sandi = document.getElementById("sandi").value;
-    if (sandi === "22") {
+    if (sandi === "110011") {
       nextPage(3);
     } else {
       alert("Sandi salah, coba lagi!");
@@ -164,7 +173,7 @@
     }, 700);
   }
 
-  // Confetti bintang
+  // Confetti bintang (jalan 10 detik)
   function startConfetti() {
     const canvas = document.getElementById("confetti-canvas");
     const ctx = canvas.getContext("2d");
@@ -180,6 +189,9 @@
         speed: Math.random() * 1 + 0.5
       });
     }
+
+    let running = true;
+    let animationId;
 
     function drawStars() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -202,11 +214,20 @@
     }
 
     function loop() {
+      if (!running) return;
       drawStars();
       updateStars();
-      requestAnimationFrame(loop);
+      animationId = requestAnimationFrame(loop);
     }
+
     loop();
+
+    // stop setelah 10 detik
+    setTimeout(() => {
+      running = false;
+      cancelAnimationFrame(animationId);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }, 10000);
   }
 
   // Navigasi halaman
