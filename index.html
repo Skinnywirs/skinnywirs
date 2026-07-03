@@ -425,7 +425,7 @@
         }
 
         /* ==========================================================================
-           7. BAB 3: PREMIUM CINEMATIC VIDEO PLATFORM
+           7. BAB 3: PREMIUM CINEMATIC VIDEO PLATFORM (YOUTUBE LAYER)
            ========================================================================== */
         .video-viewport {
             position: relative;
@@ -439,10 +439,10 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .video-viewport video {
+        .video-viewport iframe {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            border: none;
         }
 
         .btn-skip-video {
@@ -460,6 +460,7 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            z-index: 10;
         }
 
         .btn-skip-video:hover {
@@ -883,9 +884,8 @@ Nanti ku kasih setengah... hehe. 🍦
         <section id="bab3" class="bab-container">
             <h1 class="heading-magical" style="font-size: 2rem; margin-bottom: 25px;">A Little Gift</h1>
             <div class="video-viewport">
-                <video id="cinemaCore" playsinline>
-                    <source src="https://www.dropbox.com/scl/fi/t3157eo9um72g8rccewiq/Desain-tanpa-judul-8-2-2.mp4?rlkey=q7h5grz7qi0qkqqgd4frr46is&st=s1g3wtgd&raw=1" type="video/mp4">
-                </video>
+                <!-- TEMPAT LINK VIDEO YOUTUBE ANDA -->
+                <iframe id="cinemaCore" src="https://www.youtube.com/embed/_AaN4oXoNgQ?enablejsapi=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 <button class="btn-skip-video" onclick="interceptVideoPlayback()">Skip</button>
             </div>
         </section>
@@ -966,17 +966,15 @@ Nanti ku kasih setengah... hehe. 🍦
         // 3. MOTION DRIVEN STATE TRANSITION ENGINE
         let activeStageIndex = 1;
 
-        // DIUBAH: Logika pemetaan bintang tracker disesuaikan urutan visual bab yang baru
         function refreshProgressIndicator(index) {
             const activeStars = document.querySelectorAll('#masterTracker span');
             
-            // Peta urutan agar visual bintang (1 sampai 7) sinkron dengan alur baru
             const flowMapping = {
                 1: 1, // Password
                 2: 2, // A Token of Magic
                 5: 3, // Cerita
                 4: 4, // Digital Envelope
-                3: 5, // Video Disney
+                3: 5, // Video
                 6: 6, // YES/NO
                 7: 7  // Ending
             };
@@ -1015,19 +1013,9 @@ Nanti ku kasih setengah... hehe. 🍦
 
         // 4. STEP MODULAR LOGICS & SCRIPTS INTERCEPTOR
         function triggerStageScripts(index) {
-            // DIUBAH: Video sekarang berada di urutan ke-5 dalam alur (Bab 3), selesai -> lanjut ke YES/NO (Bab 6)
             if (index === 3) {
-                // Jeda musik latar agar tidak bentrok dengan video
+                // Jeda musik latar agar tidak bentrok dengan suara video YouTube
                 audioNode.pause(); 
-                
-                const videoElement = document.getElementById('cinemaCore');
-                videoElement.play().catch(() => console.log('Video autoplay halted by browser sandboxing.'));
-                
-                videoElement.onended = function() { 
-                    // Putar kembali musik secara otomatis saat video selesai
-                    if (!audioMuted) audioNode.play().catch(() => {});
-                    shiftStage(6); 
-                };
             }
         }
 
@@ -1052,7 +1040,7 @@ Nanti ku kasih setengah... hehe. 🍦
         }
 
         // ==========================================================================
-        // SYSTEM LOGIC: 3D SLIDER INTERACTIVE (ENGIN BARU)
+        // SYSTEM LOGIC: 3D SLIDER INTERACTIVE
         // ==========================================================================
         const sliderCards = document.querySelectorAll('.card-item');
         const sliderDots = document.querySelectorAll('.dot');
@@ -1066,7 +1054,7 @@ Nanti ku kasih setengah... hehe. 🍦
 
         function refreshSliderView() {
             sliderCards.forEach((card, idx) => {
-                card.className = 'card-item'; // Reset classes
+                card.className = 'card-item'; 
                 
                 if (idx === sliderIndex) {
                     card.classList.add('active');
@@ -1077,15 +1065,12 @@ Nanti ku kasih setengah... hehe. 🍦
                 }
             });
 
-            // Update Titik Indikator
             sliderDots.forEach((dot, idx) => {
                 dot.classList.toggle('active', idx === sliderIndex);
             });
 
-            // Update Informasi Teks (Halaman Aktif / Total Halaman)
             hintCard.innerText = `Geser kartu untuk melihat kartu-kartu yang lain (${sliderIndex + 1} / 6) 📖`;
 
-            // Ketika sudah melihat sampai kartu terakhir (Ke-6), aktifkan tombol Lanjut
             if (sliderIndex === 5) {
                 btnCardNext.classList.remove('disabled');
             }
@@ -1105,7 +1090,6 @@ Nanti ku kasih setengah... hehe. 🍦
             }
         }
 
-        // Event Pengendali Sentuhan Layar (Mobile) & Tarikan Mouse (Desktop)
         sliderStage.addEventListener('mousedown', (e) => { startX = e.clientX; isDragging = true; });
         sliderStage.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; });
 
@@ -1116,22 +1100,21 @@ Nanti ku kasih setengah... hehe. 🍦
             isDragging = false;
             const displacement = startX - endX;
             if (displacement > 40) {
-                executeNextSlide(); // Tarik ke kiri -> slide berikutnya
+                executeNextSlide(); 
             } else if (displacement < -40) {
-                executePrevSlide(); // Tarik ke kanan -> slide sebelumnya
+                executePrevSlide(); 
             }
         }
 
-        // Inisialisasi awal slider sewaktu dimuat
         refreshSliderView();
 
-
-        // Bab 3: Intercept Media Action
-        // DIUBAH: Skip video sekarang mengarahkan langsung ke halaman YES / NO (Bab 6)
+        // Bab 3: Intercept Media Action (YouTube Skip Handler)
         function interceptVideoPlayback() {
-            const videoElement = document.getElementById('cinemaCore');
-            videoElement.pause();
-            // Putar kembali musik secara otomatis saat tombol skip diklik
+            // Menghentikan video iframe dengan me-refresh isi src agar suaranya mati total
+            const iframe = document.getElementById('cinemaCore');
+            const currentSrc = iframe.src;
+            iframe.src = currentSrc; 
+            
             if (!audioMuted) audioNode.play().catch(() => {});
             shiftStage(6);
         }
