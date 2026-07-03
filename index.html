@@ -1,280 +1,1222 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>© 2024 Skinnywirs</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: url("quality_restoration_20250918175609164.jpg") no-repeat center center fixed;
-      background-size: cover;
-      overflow-x: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>© 2026 Skinnywirs </title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    .page {
-      text-align: center;
-      width: 100%;
-      max-width: 420px;
-      margin: 0 auto;
-      padding: 20px;
-      box-sizing: border-box;
+    <style>
+        /* ==========================================================================
+           1. DESIGN SYSTEM & CORE RESET (APPLE-INSPIRED)
+           ========================================================================== */
+        :root {
+            --bg-primary: #07152F;
+            --bg-secondary: #0D1B2A;
+            --accent-gold: #FFD54F;
+            --white: #FFFFFF;
+            --cream: #FFF8EC;
+            --card-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Poppins', sans-serif;
+            --font-handwritten: 'Caveat', cursive;
+            
+            /* Apple-grade ease-out function */
+            --ease-elegant: cubic-bezier(0.25, 1, 0.5, 1);
+            --ease-craft: cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    .page:not(.active) {
-      display: none;
-    }
+        body {
+            background-color: var(--bg-primary);
+            font-family: var(--font-body);
+            color: var(--white);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            user-select: none;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    input, button {
-      width: 90%;
-      max-width: 380px;
-      padding: 12px;
-      margin-top: 15px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-    }
+        /* ==========================================================================
+           2. PERSISTENT BACKGROUND CINEMATICS
+           ========================================================================== */
+        .magical-universe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
 
-    button {
-      background-color: #6c5ce7;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover { background-color: #341f97; }
+        .moon-glow {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255,248,236,1) 0%, rgba(255,213,79,0.15) 60%, transparent 100%);
+            border-radius: 50%;
+            filter: drop-shadow(0 0 40px rgba(255, 213, 79, 0.4));
+            animation: pulseMoon 10s var(--ease-elegant) infinite alternate;
+        }
 
-    #fontText {
-      font-size: 6vw;
-      font-weight: bold;
-      transition: font-family 0.2s ease-in-out, color 0.2s ease-in-out;
-    }
+        @keyframes pulseMoon {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 60px rgba(255, 213, 79, 0.6)); }
+        }
 
-    #page5 video {
-      width: auto;
-      height: 75vh;
-      max-height: 80vh;
-      border-radius: 16px;
-      display: block;
-      margin: 0 auto;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
+        .star-field {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
 
-    @media only screen and (min-width: 421px) and (max-width: 768px) {
-      #fontText { font-size: 5vw; }
-      #page5 video { height: 70vh; }
-    }
+        .star {
+            position: absolute;
+            background: var(--white);
+            border-radius: 50%;
+            animation: twinkle var(--duration, 4s) var(--ease-elegant) infinite alternate;
+        }
 
-    @media only screen and (min-width: 769px) {
-      #fontText { font-size: 28px; }
-      #page5 video { height: 60vh; }
-    }
+        @keyframes twinkle {
+            0% { opacity: 0.15; transform: scale(0.8); }
+            100% { opacity: 0.85; transform: scale(1.3); box-shadow: 0 0 6px var(--accent-gold); }
+        }
 
-    canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 50%;
-      pointer-events: none;
-    }
-  </style>
+        .shooting-star {
+            position: absolute;
+            top: -10%;
+            left: 70%;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--white), transparent);
+            animation: shootActive 15s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes shootActive {
+            0% { transform: translateX(0) translateY(0) rotate(-45deg) scale(0); opacity: 0; width: 0; }
+            4% { opacity: 0.8; width: 80px; }
+            12% { transform: translateX(-350px) translateY(350px) rotate(-45deg) scale(1); opacity: 0; width: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* ==========================================================================
+           3. GLOBAL FIXED CONTROLS (HEADER & NAVIGATION)
+           ========================================================================== */
+        .global-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .progress-tracker {
+            font-size: 1rem;
+            letter-spacing: 6px;
+            color: rgba(255, 213, 79, 0.15);
+            pointer-events: auto;
+        }
+
+        .progress-tracker span {
+            display: inline-block;
+            transition: transform 0.6s var(--ease-elegant), color 0.6s var(--ease-elegant), text-shadow 0.6s var(--ease-elegant);
+        }
+
+        .progress-tracker span.active {
+            color: var(--accent-gold);
+            text-shadow: 0 0 15px var(--accent-gold);
+            transform: scale(1.25);
+        }
+
+        .audio-controller {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.4s var(--ease-elegant);
+        }
+
+        .audio-controller:hover {
+            border-color: rgba(255, 213, 79, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.05);
+        }
+
+        .audio-controller svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--white);
+            transition: fill 0.3s ease;
+        }
+
+        .audio-controller:hover svg {
+            fill: var(--accent-gold);
+        }
+
+        /* ==========================================================================
+           4. STAGE CANVAS & ENGINE TRANSITIONS
+           ========================================================================== */
+        .journey-canvas {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 24px;
+        }
+
+        .bab-container {
+            position: absolute;
+            width: 100%;
+            max-width: 1000px;
+            display: none;
+            opacity: 0;
+            transform: scale(0.97) translateY(10px);
+            filter: blur(10px);
+            transition: opacity 1.2s var(--ease-craft),
+                        transform 1.2s var(--ease-craft),
+                        filter 1.2s var(--ease-craft);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .bab-container.active {
+            display: flex;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            filter: blur(0px);
+        }
+
+        /* APPLE-CLASS TYPOGRAPHY & BUTTONS */
+        .heading-magical {
+            font-family: var(--font-title);
+            font-size: 3.2rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .text-narrative {
+            font-size: 0.95rem;
+            font-weight: 300;
+            letter-spacing: 0.2px;
+            color: var(--cream);
+            opacity: 0.8;
+            max-width: 480px;
+            line-height: 1.8;
+        }
+
+        .btn-premium {
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 14px 38px;
+            border-radius: 25px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s var(--ease-elegant);
+            margin-top: 35px;
+            font-weight: 500;
+        }
+
+        .btn-premium:hover {
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            box-shadow: 0 15px 30px rgba(255, 213, 79, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .btn-premium.disabled {
+            opacity: 0.3 !important;
+            pointer-events: none !important;
+            transform: translateY(15px) !important;
+        }
+
+        /* ==========================================================================
+           5. BAB 1: PASSWORD GATEWAY
+           ========================================================================== */
+        .gatekeeper-ui {
+            margin-top: 40px;
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .gatekeeper-ui input {
+            width: 100%;
+            padding: 16px 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 213, 79, 0.15);
+            border-radius: 30px;
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            text-align: center;
+            outline: none;
+            transition: all 0.4s var(--ease-elegant);
+            letter-spacing: 2px;
+        }
+
+        .gatekeeper-ui input:focus {
+            border-color: var(--accent-gold);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 30px rgba(255, 213, 79, 0.1);
+        }
+
+        .error-log {
+            color: #FF6B6B;
+            font-size: 0.8rem;
+            margin-top: 15px;
+            min-height: 20px;
+            opacity: 0;
+            transition: opacity 0.4s var(--ease-elegant);
+            font-weight: 300;
+        }
+
+        /* ==========================================================================
+           6. BAB 2: REAL 3D SLIDER CAROUSEL ENGINE (DIUPDATE TOTAL)
+           ========================================================================== */
+        .card-system {
+            position: relative;
+            width: 310px;
+            height: 430px;
+            perspective: 2000px;
+            cursor: grab;
+            margin: 20px auto;
+        }
+        
+        .card-system:active {
+            cursor: grabbing;
+        }
+
+        .card-stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            border-radius: 12px;
+        }
+
+        /* Desain Item Halaman Kartu Slider */
+        .card-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 213, 79, 0.25);
+            transition: transform 0.6s var(--ease-elegant), opacity 0.6s var(--ease-elegant), filter 0.6s var(--ease-elegant);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(100%) scale(0.7) rotateY(-30deg); /* Berada di kanan (tersembunyi) */
+        }
+
+        .card-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        /* Kartu Aktif di Tengah */
+        .card-item.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0) scale(1) rotateY(0deg);
+            z-index: 5;
+        }
+
+        /* Kartu Sebelumnya di Sebelah Kiri */
+        .card-item.prev {
+            opacity: 0.4;
+            pointer-events: auto;
+            transform: translateX(-50%) scale(0.8) rotateY(25deg);
+            z-index: 3;
+            filter: brightness(0.6);
+        }
+
+        /* Kartu Selanjutnya di Sebelah Kanan */
+        .card-item.next {
+            opacity: 0.4;
+            pointer-events: auto;
+            transform: translateX(50%) scale(0.8) rotateY(-25deg);
+            z-index: 4;
+            filter: brightness(0.6);
+        }
+
+        /* Sistem Dots Indikator */
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 15px 0 5px 0;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: var(--accent-gold);
+            transform: scale(1.2);
+            box-shadow: 0 0 8px var(--accent-gold);
+        }
+
+        .slider-hint {
+            font-size: 0.8rem;
+            color: var(--cream);
+            opacity: 0.7;
+            margin-top: 10px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            transition: opacity 0.4s ease;
+        }
+
+        /* ==========================================================================
+           7. BAB 3: PREMIUM CINEMATIC VIDEO PLATFORM
+           ========================================================================== */
+        .video-viewport {
+            position: relative;
+            width: 100%;
+            max-width: 720px;
+            aspect-ratio: 16/9;
+            background: #000000;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .video-viewport video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .btn-skip-video {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(7, 21, 47, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            padding: 8px 20px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .btn-skip-video:hover {
+            background: var(--white);
+            color: var(--bg-primary);
+            border-color: var(--white);
+        }
+
+        /* ==========================================================================
+           8. BAB 4: DIGITAL ENVELOPE ENGINEERING
+           ========================================================================== */
+        .envelope-arena {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            background: #11223F;
+            border-radius: 0 0 12px 12px;
+            box-shadow: var(--card-shadow);
+            cursor: pointer;
+            margin: 40px 0 80px 0;
+            transition: transform 0.4s var(--ease-elegant);
+        }
+
+        .envelope-arena:hover {
+            transform: translateY(-5px);
+        }
+
+        .envelope-seal-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 110px solid #1A335E;
+            transform-origin: top center;
+            transition: transform 0.6s var(--ease-craft), z-index 0.6s step-end;
+            z-index: 3;
+        }
+
+        .envelope-arena.activated .envelope-seal-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .secure-letter {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            width: 290px;
+            height: 190px;
+            background: var(--cream);
+            border-radius: 6px;
+            z-index: 2;
+            padding: 25px;
+            color: var(--bg-primary);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1), height 0.9s var(--ease-elegant);
+            overflow: hidden;
+        }
+
+        .envelope-arena.activated .secure-letter {
+            transform: translateY(-160px);
+            height: 340px;
+            z-index: 4;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .letter-scroll-content {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding-right: 5px;
+            text-align: left;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            font-weight: 400;
+            white-space: pre-line;
+        }
+
+        /* Custom minimal scrollbar for letter */
+        .letter-scroll-content::-webkit-scrollbar { width: 3px; }
+        .letter-scroll-content::-webkit-scrollbar-thumb { background: rgba(7, 21, 47, 0.1); border-radius: 10px; }
+
+        /* ==========================================================================
+           9. BAB 5: LITERARY STORY BOOK
+           ========================================================================== */
+        .book-canvas {
+            width: 100%;
+            max-width: 580px;
+            background-color: var(--cream);
+            background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 0);
+            background-size: 20px 20px;
+            padding: 50px 40px;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow), inset 0 0 40px rgba(0,0,0,0.02);
+            color: var(--bg-primary);
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .book-canvas::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 25px;
+            width: 1px;
+            height: 100%;
+            background: rgba(7, 21, 47, 0.05);
+        }
+
+        .book-scroller {
+            max-height: 280px;
+            overflow-y: auto;
+            text-align: left;
+            padding-right: 15px;
+            padding-left: 10px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        .book-scroller::-webkit-scrollbar { width: 4px; }
+        .book-scroller::-webkit-scrollbar-thumb { background: rgba(7, 21, 47, 0.15); border-radius: 10px; }
+
+        /* ==========================================================================
+           10. BAB 6 & ENDING: TACTILE MECHANICAL QUIZ & EFFECTS
+           ========================================================================== */
+        .decision-vault {
+            position: relative;
+            width: 100%;
+            height: 160px;
+            margin-top: 40px;
+        }
+
+        .btn-choice {
+            position: absolute;
+            padding: 14px 35px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            outline: none;
+            border: none;
+            letter-spacing: 1px;
+        }
+
+        #btnYes {
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            left: 28%;
+            top: 40%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            box-shadow: 0 10px 25px rgba(255, 213, 79, 0.2);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #btnNo {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            right: 28%;
+            top: 40%;
+            transform: translate(50%, -50%);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Particle Engine Graphics */
+        .gala-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: floatGala var(--speed) linear forwards;
+        }
+
+        @keyframes floatGala {
+            0% { transform: translateY(105vh) translateX(0) rotate(0deg); opacity: 1; }
+            85% { opacity: 1; }
+            100% { transform: translateY(-15vh) translateX(var(--drift)) rotate(var(--spin)); opacity: 0; }
+        }
+
+        /* ==========================================================================
+           11. HIGHLY REFINED RESPONSIVE ARCHITECTURE
+           ========================================================================== */
+        @media (max-width: 768px) {
+            .heading-magical { font-size: 2.4rem; }
+            .text-narrative { font-size: 0.88rem; max-width: 380px; }
+            .global-header { padding: 30px 5%; }
+            .card-system { width: 270px; height: 375px; }
+            .book-canvas { padding: 40px 25px; }
+            .book-scroller { max-height: 240px; font-size: 0.88rem; }
+            #btnYes { left: 20%; }
+            #btnNo { right: 20%; }
+        }
+
+        @media (max-width: 480px) {
+            .heading-magical { font-size: 2rem; margin-bottom: 15px; }
+            .global-header { padding: 25px 20px; }
+            .progress-tracker { font-size: 0.85rem; letter-spacing: 3px; }
+            .envelope-arena { width: 280px; height: 190px; }
+            .envelope-seal-flap { border-left-width: 140px; border-right-width: 140px; border-top-width: 95px; }
+            .secure-letter { width: 250px; height: 160px; }
+            .envelope-arena.activated .secure-letter { height: 290px; transform: translateY(-130px); }
+            #btnYes { left: 15%; }
+            #btnNo { right: 15%; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Halaman 1: Input Nama -->
-  <div id="page1" class="page active">
-    <h2>atas nama siapa kak?</h2>
-    <input type="text" id="nama" placeholder="Nama kamu...">
-    <br>
-    <button onclick="simpanNama()">Lanjut</button>
-  </div>
-
-  <!-- Halaman 2: Password -->
-  <div id="page2" class="page">
-    <h2>(10×2)+1−2+3</h2>
-    <input type="password" id="sandi" placeholder="...">
-    <br>
-    <button onclick="cekSandi()">Kirim</button>
-  </div>
-
-  <!-- Halaman 3: Pesan -->
-  <div id="page3" class="page">
-    <h2 id="fontText">ada pesan untukmu</h2>
-    <h3 id="namaPesan"></h3>
-    <button onclick="nextPage(4)">Lanjut</button>
-  </div>
-
-  <!-- Halaman 4: Ucapan -->
-  <div id="page4" class="page">
-    <h1>22 September</h1>
-    <h2>Happy Birthday Sep!</h2>
-    <p>panjang umur yaa, sehat selalu, murah rezekii, makin cantik dan chubby hehe, semoga segera wisuda dan dapat pekerjaan sesuai dengan yg km inginkan,</p>
-    <p>diberkati Tuhan km dan juga keluarga duu, apapun yg km doakan sekarang semoga di kabulkan Tuhan yaa,</p>
-    <p>semoga dapat cowokk wkwk, selalu jadi alayy yaa, biar bisa di undang ke vindes trus ketemu vincent rompies wkwk</p>
-    <p>jgn lupakan teman du yg keren, cool, dan ga alay ini yaa hehe.</p>
-    <p>Bahagia selaluuu seppp, selalu bersyukur yaa. Sekali lagi selamatt ulang tahun Tuhan memberkatimuuuu💫💫</p>
-    <button onclick="nextPage(5)">Lanjut</button>
-    <canvas id="confetti-canvas"></canvas>
-    <audio id="music" autoplay loop>
-      <source src="wwd.mp3juice.blog - Pamungkas - Happy Birthday To You (Official Lyrics Video).mp3" type="audio/mpeg">
+    <audio id="bgMusic" loop>
+        <source src="assets/music/music.mp3" type="audio/mpeg">
     </audio>
-  </div>
 
-  <!-- Halaman 5: Video -->
-  <div id="page5" class="page">
-    <h2>🤪</h2>
-    <video id="video" controls autoplay muted playsinline>
-      <source src="lv_0_20250913172908 (1).mp4" type="video/mp4">
-      Browsermu tidak mendukung video.
-    </video>
-  </div>
+    <div class="magical-universe">
+        <div class="moon-glow"></div>
+        <div class="star-field" id="canvasStarField"></div>
+        <div class="shooting-star"></div>
+    </div>
 
-<script>
-  // Simpan nama
-  function simpanNama() {
-    const nama = document.getElementById("nama").value;
-    if (nama.trim() !== "") {
-      localStorage.setItem("namaUser", nama);
-      nextPage(2);
-    } else {
-      alert("Masukkan nama dulu ya 😊");
-    }
-  }
+    <header class="global-header">
+        <div class="progress-tracker" id="masterTracker">
+            <span class="active">⭐</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+        </div>
+        <div class="audio-controller" onclick="toggleAudioSystem()" title="Mute/Unmute">
+            <svg id="audioIcon" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+        </div>
+    </header>
 
-  // Cek sandi
-  function cekSandi() {
-    const sandi = document.getElementById("sandi").value;
-    if (sandi === "110011") {
-      nextPage(3);
-    } else {
-      alert("Sandi salah, coba lagi!");
-    }
-  }
+    <main class="journey-canvas">
 
-  // Animasi font pesan
-  const fonts = ["Arial", "Georgia", "Courier New", "Verdana", "Comic Sans MS"];
-  let fontIndex = 0;
-  function startFontLoop() {
-    setInterval(() => {
-      const el = document.getElementById("fontText");
-      el.style.fontFamily = fonts[fontIndex % fonts.length];
-      el.style.color = ["red","blue","green","purple","orange"][fontIndex % 5];
-      fontIndex++;
-    }, 700);
-  }
+        <section id="bab1" class="bab-container active">
+            <h1 class="heading-magical">September</h1>
+            <p class="text-narrative">"Every beautiful story has a beginning. This one starts in September"</p>
+            <div class="gatekeeper-ui">
+                <input type="password" id="secretPass" placeholder="Masukkan Password...">
+                <div class="error-log" id="authErrorMsg"></div>
+            </div>
+            <button class="btn-premium" onclick="validateGateway()"> Buka Website ✨</button>
+        </section>
 
-  // Confetti bintang dari samping ke tengah
-  function startConfetti() {
-    const canvas = document.getElementById("confetti-canvas");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight / 2;
+        <section id="bab2" class="bab-container">
+            <h1 class="heading-magical" style="font-size: 2.2rem;">The Journey of a Design</h1>
+            
+            <div class="card-system" id="birthdayCard">
+                <div class="card-stage" id="sliderStage">
+                    <div class="card-item active">
+                        <img src="assets/images/card-front.png" alt="Card 1">
+                    </div>
+                    <div class="card-item">
+                        <img src="assets/images/card-front-decor1.png" alt="Card 2">
+                    </div>
+                    <div class="card-item">
+                        <img src="assets/images/card-front-decor2.png" alt="Card 3">
+                    </div>
+                    <div class="card-item">
+                        <img src="assets/images/card-inside.png" alt="Card 4">
+                    </div>
+                    <div class="card-item">
+                        <img src="assets/images/card-inside-photo1.png" alt="Card 5">
+                    </div>
+                    <div class="card-item">
+                        <img src="assets/images/card-inside-photo2.png" alt="Card 6">
+                    </div>
+                </div>
+            </div>
 
-    let stars = [];
-    const totalStars = 80;
+            <div class="slider-dots" id="sliderDots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
 
-    // buat bintang muncul dari kiri & kanan
-    for (let i = 0; i < totalStars; i++) {
-      const fromLeft = i % 2 === 0; // selang-seling kiri-kanan
-      stars.push({
-        x: fromLeft ? 0 : canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 3 + 2,
-        speedX: fromLeft ? (Math.random() * 2 + 1) : -(Math.random() * 2 + 1),
-        speedY: (Math.random() - 0.5) * 2,
-        color: ["yellow","red","blue","purple","orange"][Math.floor(Math.random()*5)]
-      });
-    }
+            <div class="slider-hint" id="hintCard">Geser kartu untuk melihat kartu-kartu yang lain (1 / 6) 📖</div>
+            <button class="btn-premium disabled" id="btnCardNext" onclick="shiftStage(5)">Lanjut →</button>
+        </section>
 
-    let running = true;
-    let animationId;
+        <section id="bab5" class="bab-container">
+            <h1 class="heading-magical" style="font-size: 2.2rem; color: #FFD54F; margin-bottom: 25px;">Small Moments</h1>
+            <div class="book-canvas">
+                <div class="book-scroller">
+                    <p style="margin-bottom: 15px;"><strong>Rumah Sakit</strong></p>
 
-    function drawStars() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      stars.forEach(star => {
-        ctx.beginPath();
-        ctx.fillStyle = star.color;
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    }
+<p style="margin-bottom: 15px;">
+Kemarin aku nemenin temenku ke rumah sakit. Kasihan sih, dia habis jatuh dari tangga. Pas lihat kakinya... ya lumayan bikin ngilu juga.
+</p>
 
-    function updateStars() {
-      stars.forEach(star => {
-        star.x += star.speedX;
-        star.y += star.speedY;
-      });
-    }
+<p style="margin-bottom: 15px;">
+Sampai di ruang pemeriksaan, dokter langsung melihat lukanya sambil menggeleng pelan.
+<br><br>
+<i>"Hmm... sepertinya lukanya cukup dalam."</i>
+<br><br>
+Aku sama temenku langsung saling pandang.
+</p>
 
-    function loop() {
-      if (!running) return;
-      drawStars();
-      updateStars();
-      animationId = requestAnimationFrame(loop);
-    }
+<p style="margin-bottom: 15px;">
+Dokter melanjutkan,
+<br><br>
+<i>"Kayaknya kakinya harus dijahit. Kalau dibiarkan, risikonya bisa lebih besar."</i>
+<br><br>
+Ya sudah... daripada kenapa-kenapa, kami pun setuju.
+</p>
 
-    loop();
+<p style="margin-bottom: 15px;">
+Beberapa menit kemudian, temenku dibawa masuk ke ruang tindakan. Dokter sudah siap dengan suntikan bius. Begitu jarumnya hampir menyentuh kaki, temenku langsung teriak sekencang-kencangnya...
+</p>
 
-    // Stop setelah 10 detik dengan fade out smooth
-    setTimeout(() => {
-      running = false;
-      cancelAnimationFrame(animationId);
+<p style="margin-bottom: 15px; text-align: center;">
+<strong>"MAAAHHHHH!!"</strong>
+</p>
 
-      canvas.style.transition = "opacity 2s ease-out";
-      canvas.style.opacity = "0";
+<p style="margin-bottom: 15px;">
+Semua orang langsung menoleh. Suasana yang tadinya tegang mendadak hening. Aku kira dia bakal bilang,
+</p>
 
-      setTimeout(() => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        canvas.style.opacity = "1"; // reset
-        canvas.style.transition = "";
-      }, 2000);
-    }, 10000);
-  }
+<p style="margin-bottom: 15px; text-align: center;">
+<i>"Mah... aku takut..."</i><br>
+atau<br>
+<i>"Mah... aku sayang Mamah..."</i>
+</p>
 
-  // Navigasi halaman
-  function nextPage(num) {
-    const pages = document.querySelectorAll(".page");
-    pages.forEach(p => p.classList.remove("active"));
-    document.getElementById("page" + num).classList.add("active");
+<p style="margin-bottom: 15px;">
+Eh...
+Beberapa detik kemudian dia malah lanjut teriak,
+</p>
 
-    if (num === 3) {
-      const namaUser = localStorage.getItem("namaUser") || "";
-      document.getElementById("namaPesan").innerText = namaUser;
-      startFontLoop();
-    }
+<p style="margin-bottom: 15px; text-align: center;">
+<strong>"MAH... MINTA KIKOOOOOO!!"</strong>
+</p>
 
-    if (num === 4) {
-      startConfetti(); // langsung mulai confetti
-      const music = document.getElementById("music");
-      music.play().catch(() => {
-        console.log("Autoplay musik diblokir, butuh interaksi user.");
-      });
-    }
+<p style="margin-bottom: 15px;">
+WKWKWKWK.
+</p>
 
-    if (num === 5) {
-      // stop musik
-      const music = document.getElementById("music");
-      if (music) {
-        music.pause();
-        music.currentTime = 0;
-      }
+<p style="margin-bottom: 15px;">
+Dokternya yang tadi serius langsung berhenti. Terus senyum. Sambil masukin tangan ke kantong jas, beliau bilang,
+</p>
 
-      // play video
-      const video = document.getElementById("video");
-      if (video) {
-        video.muted = false;
-        video.play().catch(() => {
-          console.log("Autoplay video diblokir, user perlu klik play.");
-        });
-      }
-    }
-  }
-</script>
+<p style="margin-bottom: 15px; text-align: center;">
+<i>"Hehehe... eitss... bagi dua."</i>
+</p>
 
+<p style="margin-bottom: 15px;">
+LAH!!!
+Dia malah ngeluarin es Kiko beneran dong xixi. Aku yang dari tadi bengong pun langsung refleks ngomong.
+</p>
+
+<p style="margin-bottom: 15px; text-align: center;">
+<strong>"KIKO... ENAK TAUUU!!"</strong>
+</p>
+
+<p style="margin-bottom: 15px;">
+WKWKWK.
+Sampai sekarang aku masih bingung...
+Itu tadi dokter atau sales Kiko?
+</p>
+
+<p style="margin-bottom: 15px;">
+Beberapa bulan kemudian, waktu aku lagi asik nonton FTV "Romansa Cinta di Kandang Bebek", tiba-tiba muncul iklan.
+</p>
+
+<p style="margin-bottom: 15px; text-align: center;">
+<strong>"SAYA? JADI DUTA SHAMPO LAIN? HAHAHA... UPS, DULU PERNAH!"</strong>
+</p>
+
+<p style="margin-bottom: 15px;">
+Aku langsung nunjuk TV sambil histeris layaknya penonton K-Pop ngeliat idolnya secara langsung.
+</p>
+
+<p style="margin-bottom: 15px; text-align: center;">
+<strong>"LAH... ITU KAN DOKTER YANG BAGI-BAGI KIKO KEMARIN!"</strong>
+</p>
+
+<p style="margin-bottom: 15px;">
+Sejak saat itu aku yakin...
+
+Beliau bukan dokter.
+
+Beliau cuma lagi syuting jadi dokter.
+
+WKWKWK.
+</p>
+
+<p style="margin-bottom: 15px;">
+Oh iya...
+</p>
+
+<p style="margin-bottom: 15px;">
+Untungnya kemarin aku sempat ngambil satu es Kikonya.
+Lumayan tau... gratis. WKWKWK.
+</p>
+
+<p>
+Kalau kam mau juga...
+Kabarin aja.
+Nanti ku kasih setengah... hehe. 🍦
+</p>
+                </div>
+            </div>
+            <button class="btn-premium" onclick="shiftStage(4)">Aku Sudah Baca 😁</button>
+        </section>
+
+        <section id="bab4" class="bab-container">
+            <h1 class="heading-magical" style="font-size: 2.2rem;">One Last Letter</h1>
+            <div class="envelope-arena" id="envelopeSystem" onclick="releaseLetter()">
+                <div class="envelope-seal-flap"></div>
+                <div class="secure-letter">
+                    <div class="letter-scroll-content" id="typewriterWorkspace"></div>
+                </div>
+            </div>
+            <button class="btn-premium" id="btnLetterNext" style="display:none;" onclick="shiftStage(3)">Lanjut →</button>
+        </section>
+
+        <section id="bab3" class="bab-container">
+            <h1 class="heading-magical" style="font-size: 2rem; margin-bottom: 25px;">A Little Gift</h1>
+            <div class="video-viewport">
+                <video id="cinemaCore" playsinline>
+                    <source src="assets/video/disney.mp4" type="video/mp4">
+                </video>
+                <button class="btn-skip-video" onclick="interceptVideoPlayback()">Skip</button>
+            </div>
+        </section>
+
+        <section id="bab6" class="bab-container">
+            <h1 class="heading-magical" style="font-size: 1.5rem; opacity: 0.6; margin-bottom: 5px;">Sebelum selesai...</h1>
+            <h2 style="font-family: var(--font-title); font-size: 2.2rem; padding: 0 10px;">Siapakah yang paling alay dari dua nama berikut?</h2>
+            <div class="decision-vault">
+                <button class="btn-choice" id="btnYes" onclick="processTactileYes()">Septi</button>
+                <button class="btn-choice" id="btnNo" onmouseover="evadeTactileNo()" onclick="evadeTactileNo()">Putra</button>
+            </div>
+        </section>
+
+        <section id="bab7" class="bab-container">
+            <h1 class="heading-magical" style="font-size: 4rem; margin-bottom: 20px; text-align: center;">WKWKWK 🤪</h1>
+            
+            <p class="text-narrative" style="text-align: center; font-size: 0.9rem; opacity: 0.6; margin-bottom: 15px; width: 100%;">
+                Terima kasih sudah meluangkan waktu untuk membuka hadiah kecil ini.
+            </p>
+            <p class="text-narrative" style="text-align: center; font-size: 0.9rem; opacity: 0.6; margin-bottom: 15px; width: 100%;">
+                Semoga senyum hari ini menjadi salah satu kenangan yang selalu kamu ingat.
+            </p>
+           
+            <p class="text-narrative" style="text-align: center; font-size: 0.9rem; opacity: 0.6; margin-bottom: 25px; width: 100%;">
+                Sekali lagi...
+            </p>
+            
+            <p class="handwritten" style="font-size: 2.2rem; color: var(--accent-gold); margin-bottom: 25px; text-align: center; width: 100%;">
+                Selamat ulang tahun!!
+            </p>
+            
+            <p style="font-size: 0.85rem; margin-top: 50px; font-weight: 400; color: var(--cream); letter-spacing: 1px; text-align: center; width: 100%;">
+                Crafted by Putra
+            </p>
+        </section>
+
+    </main>
+
+    <script>
+        // Konfigurasi sistem keamanan internal utama Anda
+        const ENCRYPTED_KEY = "magic"; 
+
+        // 1. HIGH PERFORMANCE ORGANIC STARS SYSTEM
+        function buildStarField() {
+            const starContainer = document.getElementById('canvasStarField');
+            const totalStars = window.innerWidth < 768 ? 35 : 80;
+            
+            for (let i = 0; i < totalStars; i++) {
+                const node = document.createElement('div');
+                node.className = 'star';
+                node.style.left = Math.random() * 100 + '%';
+                node.style.top = Math.random() * 100 + '%';
+                const dynamicSize = Math.random() * 2 + 0.6;
+                node.style.width = dynamicSize + 'px';
+                node.style.height = dynamicSize + 'px';
+                node.style.setProperty('--duration', (Math.random() * 4 + 3) + 's');
+                starContainer.appendChild(node);
+            }
+        }
+        window.addEventListener('DOMContentLoaded', buildStarField);
+
+        // 2. AUDIO ARCHITECTURE SYSTEM
+        const audioNode = document.getElementById('bgMusic');
+        let audioMuted = false;
+
+        function toggleAudioSystem() {
+            audioMuted = !audioMuted;
+            audioNode.muted = audioMuted;
+            const icon = document.getElementById('audioIcon');
+            
+            if(audioMuted) {
+                icon.innerHTML = `<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>`;
+            } else {
+                icon.innerHTML = `<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>`;
+            }
+        }
+
+        // 3. MOTION DRIVEN STATE TRANSITION ENGINE
+        let activeStageIndex = 1;
+
+        // DIUBAH: Logika pemetaan bintang tracker disesuaikan urutan visual bab yang baru
+        function refreshProgressIndicator(index) {
+            const activeStars = document.querySelectorAll('#masterTracker span');
+            
+            // Peta urutan agar visual bintang (1 sampai 7) sinkron dengan alur baru
+            const flowMapping = {
+                1: 1, // Password
+                2: 2, // A Token of Magic
+                5: 3, // Cerita
+                4: 4, // Digital Envelope
+                3: 5, // Video Disney
+                6: 6, // YES/NO
+                7: 7  // Ending
+            };
+            
+            const currentVisualStep = flowMapping[index] || 1;
+
+            activeStars.forEach((star, pos) => {
+                if (pos < currentVisualStep) {
+                    star.textContent = '⭐';
+                    star.classList.add('active');
+                } else {
+                    star.textContent = '☆';
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        function shiftStage(nextIndex) {
+            const currentElement = document.getElementById(`bab${activeStageIndex}`);
+            const nextElement = document.getElementById(`bab${nextIndex}`);
+
+            if(currentElement) {
+                currentElement.classList.remove('active');
+                setTimeout(() => { currentElement.style.display = 'none'; }, 1100);
+            }
+
+            setTimeout(() => {
+                nextElement.style.display = 'flex';
+                nextElement.offsetHeight; 
+                nextElement.classList.add('active');
+                activeStageIndex = nextIndex;
+                refreshProgressIndicator(nextIndex);
+                triggerStageScripts(nextIndex);
+            }, 1150);
+        }
+
+        // 4. STEP MODULAR LOGICS & SCRIPTS INTERCEPTOR
+        function triggerStageScripts(index) {
+            // DIUBAH: Video sekarang berada di urutan ke-5 dalam alur (Bab 3), selesai -> lanjut ke YES/NO (Bab 6)
+            if (index === 3) {
+                const videoElement = document.getElementById('cinemaCore');
+                videoElement.play().catch(() => console.log('Video autoplay halted by browser sandboxing.'));
+                videoElement.onended = function() { shiftStage(6); };
+            }
+        }
+
+        // Bab 1: Gatekeeper Action
+        function validateGateway() {
+            const rawInput = document.getElementById('secretPass').value;
+            const logBox = document.getElementById('authErrorMsg');
+            const humorousResponses = [
+                "Hmm.. kodenya belum klop nih, coba diingat lagi ya 🕵️",
+                "Akses belum terbuka! Apakah ada huruf yang keliru? 🤔",
+                "Upsss.. masih salah nich! Coba password rahasia lainnya 🤭"
+            ];
+
+            if(rawInput.toLowerCase() === ENCRYPTED_KEY.toLowerCase()) {
+                logBox.style.opacity = 0;
+                audioNode.play().catch(() => console.log('Music engine context delayed due to system protection.'));
+                shiftStage(2);
+            } else {
+                logBox.textContent = humorousResponses[Math.floor(Math.random() * humorousResponses.length)];
+                logBox.style.opacity = 1;
+            }
+        }
+
+        // ==========================================================================
+        // SYSTEM LOGIC: 3D SLIDER INTERACTIVE (ENGIN BARU)
+        // ==========================================================================
+        const sliderCards = document.querySelectorAll('.card-item');
+        const sliderDots = document.querySelectorAll('.dot');
+        const hintCard = document.getElementById('hintCard');
+        const btnCardNext = document.getElementById('btnCardNext');
+        const sliderStage = document.getElementById('sliderStage');
+
+        let sliderIndex = 0;
+        let startX = 0;
+        let isDragging = false;
+
+        function refreshSliderView() {
+            sliderCards.forEach((card, idx) => {
+                card.className = 'card-item'; // Reset classes
+                
+                if (idx === sliderIndex) {
+                    card.classList.add('active');
+                } else if (idx === sliderIndex - 1) {
+                    card.classList.add('prev');
+                } else if (idx === sliderIndex + 1) {
+                    card.classList.add('next');
+                }
+            });
+
+            // Update Titik Indikator
+            sliderDots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === sliderIndex);
+            });
+
+            // Update Informasi Teks (Halaman Aktif / Total Halaman)
+            hintCard.innerText = `Geser kartu untuk melihat kartu-kartu yang lain (${sliderIndex + 1} / 6) 📖`;
+
+            // Ketika sudah melihat sampai kartu terakhir (Ke-6), aktifkan tombol Lanjut
+            if (sliderIndex === 5) {
+                btnCardNext.classList.remove('disabled');
+            }
+        }
+
+        function executeNextSlide() {
+            if (sliderIndex < sliderCards.length - 1) {
+                sliderIndex++;
+                refreshSliderView();
+            }
+        }
+
+        function executePrevSlide() {
+            if (sliderIndex > 0) {
+                sliderIndex--;
+                refreshSliderView();
+            }
+        }
+
+        // Event Pengendali Sentuhan Layar (Mobile) & Tarikan Mouse (Desktop)
+        sliderStage.addEventListener('mousedown', (e) => { startX = e.clientX; isDragging = true; });
+        sliderStage.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; });
+
+        sliderStage.addEventListener('mouseup', (e) => { if (!isDragging) return; resolveDragEnd(e.clientX); });
+        sliderStage.addEventListener('touchend', (e) => { if (!isDragging) return; resolveDragEnd(e.changedTouches[0].clientX); });
+
+        function resolveDragEnd(endX) {
+            isDragging = false;
+            const displacement = startX - endX;
+            if (displacement > 40) {
+                executeNextSlide(); // Tarik ke kiri -> slide berikutnya
+            } else if (displacement < -40) {
+                executePrevSlide(); // Tarik ke kanan -> slide sebelumnya
+            }
+        }
+
+        // Inisialisasi awal slider sewaktu dimuat
+        refreshSliderView();
+
+
+        // Bab 3: Intercept Media Action
+        // DIUBAH: Skip video sekarang mengarahkan langsung ke halaman YES / NO (Bab 6)
+        function interceptVideoPlayback() {
+            const videoElement = document.getElementById('cinemaCore');
+            videoElement.pause();
+            shiftStage(6);
+        }
+
+        // Bab 4: Structural Letter Typewriter System
+        let typewriterActive = false;
+        function releaseLetter() {
+            const envNode = document.getElementById('envelopeSystem');
+            if(!envNode.classList.contains('activated')) {
+                envNode.classList.add('activated');
+                if(!typewriterActive) {
+                    typewriterActive = true;
+                    setTimeout(initiateTypewriterCore, 1000);
+                }
+            }
+        }
+
+        const letterScriptBody = "22 September\n\nHappy Birthday Sep!\n\npanjang umur yaa, sehat selalu, murah rezekii, makin cantik dan gemoy hehe, semoga pekerjaan yang kam jalani sekarang menjadi pengalaman yang baik dan bahagia untuk kehidupan ndu,\n\ndiberkati Tuhan km dan juga keluarga duu, kalau diberi kesempatan sama Tuhan, abg ingin bisa kenal lebih dekat dengan km dan keluarga besar ndu, apapun yg km doakan sekarang semoga di kabulkan Tuhan yaa,\n\nsemoga dapat sesuatu yang selalu kam ingini, selalu jadi alayy yaa, biar bisa km nikmati kehidupan ini tanpa perlu mikirin sudut pandang orang lain tentang bagaimana km menjalani hidup ndu,\n\njgn lupakan abg yg keren, cool dan ga alay ini yaa hehe.\n\nBahagia selaluuu seppp, selalu bersyukur yaa. Sekali lagi selamatt ulang tahun Tuhan memberkatimuuuu💫💫";
+        
+        function initiateTypewriterCore() {
+            const targetOutput = document.getElementById('typewriterWorkspace');
+            let cursorPosition = 0;
+            
+            function printChar() {
+                if(cursorPosition < letterScriptBody.length) {
+                    targetOutput.textContent += letterScriptBody.charAt(cursorPosition);
+                    cursorPosition++;
+                    setTimeout(printChar, 30);
+                } else {
+                    const nextBtn = document.getElementById('btnLetterNext');
+                    nextBtn.style.display = 'inline-block';
+                }
+            }
+            printChar();
+        }
+
+        // Bab 6: Evade Mechanism Logic (Anti-Click)
+        function evadeTactileNo() {
+            const noButton = document.getElementById('btnNo');
+            const boxContainer = document.querySelector('.decision-vault');
+            
+            const safeWidthLimit = boxContainer.clientWidth - noButton.clientWidth;
+            const safeHeightLimit = boxContainer.clientHeight - noButton.clientHeight;
+            
+            const calculatedX = Math.floor(Math.random() * safeWidthLimit);
+            const calculatedY = Math.floor(Math.random() * safeHeightLimit);
+            
+            noButton.style.left = calculatedX + 'px';
+            noButton.style.top = calculatedY + 'px';
+            noButton.style.transform = 'none';
+            
+            const visualTransforms = [
+                'scale(0.8) rotate(5deg)',
+                'scale(0.9) rotate(-6deg)',
+                'scale(0.75) rotate(12deg)'
+            ];
+            noButton.style.transform = visualTransforms[Math.floor(Math.random() * visualTransforms.length)];
+        }
+
+        // Bab 6: Tactile YES Progressive Expansion System
+        let yesInteractionCounter = 0;
+        function processTactileYes() {
+            const yesButton = document.getElementById('btnYes');
+            yesInteractionCounter++;
+            
+            if(yesInteractionCounter === 1) {
+                yesButton.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            } else if(yesInteractionCounter === 2) {
+                yesButton.style.transform = 'translate(-50%, -50%) scale(2.3)';
+            } else if(yesInteractionCounter === 3) {
+                yesButton.style.transform = 'translate(-50%, -50%) scale(3.5)';
+            } else if(yesInteractionCounter >= 4) {
+                yesButton.style.display = 'none';
+                document.getElementById('btnNo').style.display = 'none';
+                
+                generateCelebrationGala();
+                setTimeout(() => { shiftStage(7); }, 500);
+            }
+        }
+
+        // 5. CELEBRATION DISPATCHER MATRIX ENGINE
+        function generateCelebrationGala() {
+            const galaAssets = ['🎈', '✨', '🎉', '💖', '💥', '⭐'];
+            const productionVolume = 65;
+            
+            for (let i = 0; i < productionVolume; i++) {
+                setTimeout(() => {
+                    const dynamicElement = document.createElement('div');
+                    dynamicElement.className = 'gala-particle';
+                    dynamicElement.textContent = galaAssets[Math.floor(Math.random() * galaAssets.length)];
+                    
+                    dynamicElement.style.left = Math.random() * 100 + 'vw';
+                    dynamicElement.style.fontSize = (Math.random() * 1.6 + 1.2) + 'rem';
+                    dynamicElement.style.setProperty('--speed', (Math.random() * 2.5 + 3.5) + 's');
+                    dynamicElement.style.setProperty('--drift', (Math.random() * 240 - 120) + 'px');
+                    dynamicElement.style.setProperty('--spin', (Math.random() * 720) + 'deg');
+                    
+                    document.body.appendChild(dynamicElement);
+                    setTimeout(() => { dynamicElement.remove(); }, 6000);
+                }, i * 55);
+            }
+        }
+    </script>
 </body>
 </html>
