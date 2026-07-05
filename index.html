@@ -7,6 +7,8 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.youtube.com">
+    <link rel="preconnect" href="https://s.ytimg.com">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
@@ -40,9 +42,9 @@
         html, body {
             width: 100%;
             max-width: 100%;
-            overflow-x: hidden; /* Mengunci halaman agar tidak bergeser ke kanan-kiri di HP */
+            overflow-x: hidden; 
             position: relative;
-            touch-action: pan-y; /* Mencegah geseran horizontal yang tidak sengaja menggerakkan halaman */
+            touch-action: pan-y; 
         }
 
         body {
@@ -67,6 +69,7 @@
             z-index: 1;
             overflow: hidden;
             pointer-events: none;
+            contain: strict; /* Mengisolasi background dari perubahan layout halaman utama */
         }
 
         .moon-glow {
@@ -79,17 +82,20 @@
             border-radius: 50%;
             filter: drop-shadow(0 0 40px rgba(255, 213, 79, 0.4));
             animation: pulseMoon 10s var(--ease-elegant) infinite alternate;
+            will-change: transform, opacity; /* Optimalisasi GPU Compositing */
+            transform: translateZ(0);
         }
 
         @keyframes pulseMoon {
-            0% { transform: scale(1); opacity: 0.7; }
-            100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 60px rgba(255, 213, 79, 0.6)); }
+            0% { transform: scale(1) translateZ(0); opacity: 0.7; }
+            100% { transform: scale(1.08) translateZ(0); opacity: 1; filter: drop-shadow(0 0 60px rgba(255, 213, 79, 0.6)); }
         }
 
         .star-field {
             position: absolute;
             width: 100%;
             height: 100%;
+            contain: strict;
         }
 
         .star {
@@ -97,11 +103,13 @@
             background: var(--white);
             border-radius: 50%;
             animation: twinkle var(--duration, 4s) var(--ease-elegant) infinite alternate;
+            will-change: transform, opacity;
+            transform: translateZ(0);
         }
 
         @keyframes twinkle {
-            0% { opacity: 0.15; transform: scale(0.8); }
-            100% { opacity: 0.85; transform: scale(1.3); box-shadow: 0 0 6px var(--accent-gold); }
+            0% { opacity: 0.15; transform: scale(0.8) translateZ(0); }
+            100% { opacity: 0.85; transform: scale(1.3) translateZ(0); box-shadow: 0 0 6px var(--accent-gold); }
         }
 
         .shooting-star {
@@ -113,12 +121,13 @@
             background: linear-gradient(90deg, var(--white), transparent);
             animation: shootActive 15s linear infinite;
             opacity: 0;
+            will-change: transform;
         }
 
         @keyframes shootActive {
-            0% { transform: translateX(0) translateY(0) rotate(-45deg) scale(0); opacity: 0; width: 0; }
+            0% { transform: translateX(0) translateY(0) rotate(-45deg) scale(0) translateZ(0); opacity: 0; width: 0; }
             4% { opacity: 0.8; width: 80px; }
-            12% { transform: translateX(-350px) translateY(350px) rotate(-45deg) scale(1); opacity: 0; width: 0; }
+            12% { transform: translateX(-350px) translateY(350px) rotate(-45deg) scale(1) translateZ(0); opacity: 0; width: 0; }
             100% { opacity: 0; }
         }
 
@@ -148,6 +157,7 @@
         .progress-tracker span {
             display: inline-block;
             transition: transform 0.6s var(--ease-elegant), color 0.6s var(--ease-elegant), text-shadow 0.6s var(--ease-elegant);
+            will-change: transform, color;
         }
 
         .progress-tracker span.active {
@@ -201,7 +211,7 @@
             justify-content: center;
             align-items: center;
             padding: 40px 24px;
-            overflow: hidden; /* Mengunci semua bab agar tetap berada di dalam area canvas */
+            overflow: hidden; 
         }
 
         .bab-container {
@@ -219,6 +229,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            will-change: transform, opacity, filter;
         }
 
         .bab-container.active {
@@ -321,7 +332,7 @@
         }
 
         /* ==========================================================================
-           6. BAB 2: REAL 3D SLIDER CAROUSEL ENGINE (DIUPDATE TOTAL)
+           6. BAB 2: REAL 3D SLIDER CAROUSEL ENGINE
            ========================================================================== */
         .card-system {
             position: relative;
@@ -344,7 +355,6 @@
             border-radius: 12px;
         }
 
-        /* Desain Item Halaman Kartu Slider */
         .card-item {
             position: absolute;
             width: 100%;
@@ -356,7 +366,8 @@
             transition: transform 0.6s var(--ease-elegant), opacity 0.6s var(--ease-elegant), filter 0.6s var(--ease-elegant);
             opacity: 0;
             pointer-events: none;
-            transform: translateX(100%) scale(0.7) rotateY(-30deg); /* Berada di kanan (tersembunyi) */
+            transform: translateX(100%) scale(0.7) rotateY(-30deg);
+            will-change: transform, opacity;
         }
 
         .card-item img {
@@ -366,7 +377,6 @@
             pointer-events: none;
         }
 
-        /* Kartu Aktif di Tengah */
         .card-item.active {
             opacity: 1;
             pointer-events: auto;
@@ -374,7 +384,6 @@
             z-index: 5;
         }
 
-        /* Kartu Sebelumnya di Sebelah Kiri */
         .card-item.prev {
             opacity: 0.4;
             pointer-events: auto;
@@ -383,7 +392,6 @@
             filter: brightness(0.6);
         }
 
-        /* Kartu Selanjutnya di Sebelah Kanan */
         .card-item.next {
             opacity: 0.4;
             pointer-events: auto;
@@ -392,7 +400,6 @@
             filter: brightness(0.6);
         }
 
-        /* Sistem Dots Indikator */
         .slider-dots {
             display: flex;
             justify-content: center;
@@ -542,7 +549,6 @@
             white-space: pre-line;
         }
 
-        /* Custom minimal scrollbar for letter */
         .letter-scroll-content::-webkit-scrollbar { width: 3px; }
         .letter-scroll-content::-webkit-scrollbar-thumb { background: rgba(7, 21, 47, 0.1); border-radius: 10px; }
 
@@ -607,6 +613,7 @@
             outline: none;
             border: none;
             letter-spacing: 1px;
+            will-change: transform, left, top;
         }
 
         #btnYes {
@@ -627,15 +634,15 @@
             top: 40%;
             transform: translate(50%, -50%);
             border: 1px solid rgba(255,255,255,0.15);
-            transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: transform 0.2s ease, left 0.25s var(--ease-elegant), top 0.25s var(--ease-elegant);
         }
 
-        /* Particle Engine Graphics */
         .gala-particle {
             position: fixed;
             pointer-events: none;
             z-index: 9999;
             animation: floatGala var(--speed) linear forwards;
+            will-change: transform, opacity;
         }
 
         @keyframes floatGala {
@@ -712,22 +719,22 @@
             <div class="card-system" id="birthdayCard">
                 <div class="card-stage" id="sliderStage">
                     <div class="card-item active">
-                        <img src="IMG_20260630_120033.jpg.jpeg" alt="Card 1">
+                        <img src="IMG_20260630_120033.jpg.jpeg" alt="Card 1" loading="eager">
                     </div>
                     <div class="card-item">
-                        <img src="IMG_20260630_120059.jpg.jpeg" alt="Card 2">
+                        <img src="IMG_20260630_120059.jpg.jpeg" alt="Card 2" loading="lazy">
                     </div>
                     <div class="card-item">
-                        <img src="IMG_20260630_114619.jpg.jpeg" alt="Card 3">
+                        <img src="IMG_20260630_114619.jpg.jpeg" alt="Card 3" loading="lazy">
                     </div>
                     <div class="card-item">
-                        <img src="IMG_20260630_114634.jpg.jpeg" alt="Card 4">
+                        <img src="IMG_20260630_114634.jpg.jpeg" alt="Card 4" loading="lazy">
                     </div>
                     <div class="card-item">
-                        <img src="IMG_20260630_115958.jpg.jpeg" alt="Card 5">
+                        <img src="IMG_20260630_115958.jpg.jpeg" alt="Card 5" loading="lazy">
                     </div>
                     <div class="card-item">
-                        <img src="IMG_20260630_115939.jpg.jpeg" alt="Card 6">
+                        <img src="IMG_20260630_115939.jpg.jpeg" alt="Card 6" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -750,121 +757,28 @@
             <div class="book-canvas">
                 <div class="book-scroller">
                     <p style="margin-bottom: 15px;"><strong>Rumah Sakit</strong></p>
-
-<p style="margin-bottom: 15px;">
-Kemarin aku nemenin temenku ke rumah sakit. Kasihan sih, dia habis jatuh dari tangga. Pas lihat kakinya... ya lumayan bikin ngilu juga.
-</p>
-
-<p style="margin-bottom: 15px;">
-Sampai di ruang pemeriksaan, dokter langsung melihat lukanya sambil menggeleng pelan.
-<br><br>
-<i>"Hmm... sepertinya lukanya cukup dalam."</i>
-<br><br>
-Aku sama temenku langsung saling pandang.
-</p>
-
-<p style="margin-bottom: 15px;">
-Dokter melanjutkan,
-<br><br>
-<i>"Kayaknya kakinya harus dijahit. Kalau dibiarkan, risikonya bisa lebih besar."</i>
-<br><br>
-Ya sudah... daripada kenapa-kenapa, kami pun setuju.
-</p>
-
-<p style="margin-bottom: 15px;">
-Beberapa menit kemudian, temenku dibawa masuk ke ruang tindakan. Dokter sudah siap dengan suntikan bius. Begitu jarumnya hampir menyentuh kaki, temenku langsung teriak sekencang-kencangnya...
-</p>
-
-<p style="margin-bottom: 15px; text-align: center;">
-<strong>"MAAAHHHHH!!"</strong>
-</p>
-
-<p style="margin-bottom: 15px;">
-Semua orang langsung menoleh. Suasana yang tadinya tegang mendadak hening. Aku kira dia bakal ngomong,
-</p>
-
-<p style="margin-bottom: 15px; text-align: center;">
-<i>"Mah... aku takut..."</i><br>
-atau<br>
-<i>"Mah... aku sayang Mamah..."</i>
-</p>
-
-<p style="margin-bottom: 15px;">
-Eh...
-Beberapa detik kemudian dia malah lanjut teriak,
-</p>
-
-<p style="margin-bottom: 15px; text-align: center;">
-<strong>"MAH... MINTA KIKOOOOOO!!"</strong>
-</p>
-
-<p style="margin-bottom: 15px;">
-WKWKWK.
-</p>
-
-<p style="margin-bottom: 15px;">
-Dokternya yang tadi serius langsung berhenti. Terus senyum. Sambil masukin tangan ke kantong jas, beliau bilang,
-</p>
-
-<p style="margin-bottom: 15px; text-align: center;">
-<i>"Hehehe... eitss... bagi dua."</i>
-</p>
-
-<p style="margin-bottom: 15px;">
-LAH!!!
-Dia malah ngeluarin es Kiko beneran dong xixi. Aku yang dari tadi bengong pun langsung refleks ngomong.
-</p>
-
-<p style="margin-bottom: 15px; text-align: center;">
-<strong>"KIKO... ENAK TAUUU!!"</strong>
-</p>
-
-<p style="margin-bottom: 15px;">
-WKWKWK.
-Sampai sekarang aku masih bingung...
-Itu tadi dokter atau sales Kiko?
-</p>
-
-<p style="margin-bottom: 15px;">
-Beberapa bulan kemudian, waktu aku lagi asik nonton FTV "Romansa Cinta di Kandang Bebek", tiba-tiba muncul iklan.
-</p>
-
-<p style="margin-bottom: 15px; text-align: center;">
-<strong>"SAYA? JADI DUTA SHAMPO LAIN? HAHAHA... UPS, DULU PERNAH!"</strong>
-</p>
-
-<p style="margin-bottom: 15px;">
-Aku langsung nunjuk TV sambil histeris layaknya penonton K-Pop ngeliat idolnya secara langsung.
-</p>
-
-<p style="margin-bottom: 15px; text-align: center;">
-<strong>"LAH... ITU KAN DOKTER YANG BAGI-BAGI KIKO KEMARIN!"</strong>
-</p>
-
-<p style="margin-bottom: 15px;">
-Sejak saat itu aku yakin...
-
-Beliau bukan dokter.
-
-Beliau cuma lagi syuting jadi dokter.
-
-WKWKWK.
-</p>
-
-<p style="margin-bottom: 15px;">
-Oh iya...
-</p>
-
-<p style="margin-bottom: 15px;">
-Untungnya kemarin aku sempat ngambil satu es Kikonya.
-Lumayan tau... gratis. WKWKWK.
-</p>
-
-<p>
-Kalau kam mau juga...
-Kabarin aja.
-Nanti ku kasih setengah... hehe. 🍦
-</p>
+                    <p style="margin-bottom: 15px;">Kemarin aku nemenin temenku ke rumah sakit. Kasihan sih, dia habis jatuh dari tangga. Pas lihat kakinya... ya lumayan bikin ngilu juga.</p>
+                    <p style="margin-bottom: 15px;">Sampai di ruang pemeriksaan, dokter langsung melihat lukanya sambil menggeleng pelan.<br><br><i>"Hmm... sepertinya lukanya cukup dalam."</i><br><br>Aku sama temenku langsung saling pandang.</p>
+                    <p style="margin-bottom: 15px;">Dokter melanjutkan,<br><br><i>"Kayaknya kakinya harus dijahit. Kalau dibiarkan, risikonya bisa lebih besar."</i><br><br>Ya sudah... daripada kenapa-kenapa, kami pun setuju.</p>
+                    <p style="margin-bottom: 15px;">Beberapa menit kemudian, temenku dibawa masuk ke ruang tindakan. Dokter sudah siap dengan suntikan bius. Begitu jarumnya hampir menyentuh kaki, temenku langsung teriak sekencang-kencangnya...</p>
+                    <p style="margin-bottom: 15px; text-align: center;"><strong>"MAAAHHHHH!!"</strong></p>
+                    <p style="margin-bottom: 15px;">Semua orang langsung menoleh. Suasana yang tadinya tegang mendadak hening. Aku kira dia bakal ngomong,</p>
+                    <p style="margin-bottom: 15px; text-align: center;"><i>"Mah... aku takut..."</i><br>atau<br><i>"Mah... aku sayang Mamah..."</i></p>
+                    <p style="margin-bottom: 15px;">Eh... Beberapa detik kemudian dia malah lanjut teriak,</p>
+                    <p style="margin-bottom: 15px; text-align: center;"><strong>"MAH... MINTA KIKOOOOOO!!"</strong></p>
+                    <p style="margin-bottom: 15px;">WKWKWK.</p>
+                    <p style="margin-bottom: 15px;">Dokternya yang tadi serius langsung berhenti. Terus senyum. Sambil masukin tangan ke kantong jas, beliau billing,<br><br><i>"Hehehe... eitss... bagi dua."</i></p>
+                    <p style="margin-bottom: 15px;">LAH!!! Dia malah ngeluarin es Kiko beneran dong xixi. Aku yang dari tadi bengong pun langsung refleks ngomong.</p>
+                    <p style="margin-bottom: 15px; text-align: center;"><strong>"KIKO... ENAK TAUUU!!"</strong></p>
+                    <p style="margin-bottom: 15px;">WKWKWK. Sampai sekarang aku masih bingung... Itu tadi dokter atau sales Kiko?</p>
+                    <p style="margin-bottom: 15px;">Beberapa bulan kemudian, waktu aku lagi asik nonton FTV "Romansa Cinta di Kandang Bebek", tiba-tiba muncul iklan.</p>
+                    <p style="margin-bottom: 15px; text-align: center;"><strong>"SAYA? JADI DUTA SHAMPO LAIN? HAHAHA... UPS, DULU PERNAH!"</strong></p>
+                    <p style="margin-bottom: 15px;">Aku langsung nunjuk TV sambil histeris layaknya penonton K-Pop ngeliat idolnya secara langsung.</p>
+                    <p style="margin-bottom: 15px; text-align: center;"><strong>"LAH... ITU KAN DOKTER YANG BAGI-BAGI KIKO KEMARIN!"</strong></p>
+                    <p style="margin-bottom: 15px;">Sejak saat itu aku yakin... Beliau bukan dokter. Beliau cuma lagi syuting jadi dokter. WKWKWK.</p>
+                    <p style="margin-bottom: 15px;">Oh iya...</p>
+                    <p style="margin-bottom: 15px;">Untungnya kemarin aku sempat ngambil satu es Kikonya. Lumayan tau... gratis. WKWKWK.</p>
+                    <p>Kalau kam mau juga... Kabarin aja. Nanti ku kasih setengah... hehe. 🍦</p>
                 </div>
             </div>
             <button class="btn-premium" onclick="shiftStage(4)">Aku Sudah Baca 😁</button>
@@ -884,8 +798,7 @@ Nanti ku kasih setengah... hehe. 🍦
         <section id="bab3" class="bab-container">
             <h1 class="heading-magical" style="font-size: 2rem; margin-bottom: 25px;">A Little Gift</h1>
             <div class="video-viewport">
-                <!-- TEMPAT LINK VIDEO YOUTUBE ANDA -->
-                <iframe id="cinemaCore" src="https://www.youtube.com/embed/_AaN4oXoNgQ?enablejsapi=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <iframe id="cinemaCore" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 <button class="btn-skip-video" onclick="interceptVideoPlayback()">Skip</button>
             </div>
         </section>
@@ -901,87 +814,83 @@ Nanti ku kasih setengah... hehe. 🍦
 
         <section id="bab7" class="bab-container">
             <h1 class="heading-magical" style="font-size: 4rem; margin-bottom: 20px; text-align: center;">HEHEHE </h1>
-            
-            <p class="text-narrative" style="text-align: center; font-size: 0.9rem; opacity: 0.6; margin-bottom: 15px; width: 100%;">
-                Terima kasih sudah meluangkan waktu untuk membuka hadiah kecil ini.
-            </p>
-            <p class="text-narrative" style="text-align: center; font-size: 0.9rem; opacity: 0.6; margin-bottom: 15px; width: 100%;">
-                Semoga senyummu hari ini menjadi salah satu kenangan yang selalu kamu ingat.
-            </p>
-           
-            <p class="text-narrative" style="text-align: center; font-size: 0.9rem; opacity: 0.6; margin-bottom: 25px; width: 100%;">
-                Sekali lagi...
-            </p>
-            
-            <p class="handwritten" style="font-size: 2.2rem; color: var(--accent-gold); margin-bottom: 25px; text-align: center; width: 100%;">
-                Selamat ulang tahun!!
-            </p>
-            
-            <p style="font-size: 0.85rem; margin-top: 50px; font-weight: 400; color: var(--cream); letter-spacing: 1px; text-align: center; width: 100%;">
-                Crafted by Putra
-            </p>
+            <p class="text-narrative" style="text-align: center; font-size: 0.9rem; opacity: 0.6; margin-bottom: 15px; width: 100%;">Terima kasih sudah meluangkan waktu untuk membuka hadiah kecil ini.</p>
+            <p class="text-narrative" style="text-align: center; font-size: 0.9rem; opacity: 0.6; margin-bottom: 15px; width: 100%;">Semoga senyummu hari ini menjadi salah satu kenangan yang selalu kamu ingat.</p>
+            <p class="text-narrative" style="text-align: center; font-size: 0.9rem; opacity: 0.6; margin-bottom: 25px; width: 100%;">Sekali lagi...</p>
+            <p class="handwritten" style="font-size: 2.2rem; color: var(--accent-gold); margin-bottom: 25px; text-align: center; width: 100%;">Selamat ulang tahun!!</p>
+            <p style="font-size: 0.85rem; margin-top: 50px; font-weight: 400; color: var(--cream); letter-spacing: 1px; text-align: center; width: 100%;">Crafted by Putra</p>
         </section>
 
     </main>
 
     <script>
-        // Konfigurasi sistem keamanan internal utama Anda
         const ENCRYPTED_KEY = "magic"; 
+        
+        // DOM Cache Registry untuk Menghindari Re-Querying Berulang
+        const DOM = {
+            audio: document.getElementById('bgMusic'),
+            audioIcon: document.getElementById('audioIcon'),
+            iframe: document.getElementById('cinemaCore'),
+            trackerStars: null, // Diisi dinamis pas DOM selesai dimuat
+            secretInput: document.getElementById('secretPass'),
+            authError: document.getElementById('authErrorMsg'),
+            sliderCards: document.querySelectorAll('.card-item'),
+            sliderDots: document.querySelectorAll('.dot'),
+            hintCard: document.getElementById('hintCard'),
+            btnCardNext: document.getElementById('btnCardNext'),
+            sliderStage: document.getElementById('sliderStage'),
+            typewriter: document.getElementById('typewriterWorkspace'),
+            btnLetterNext: document.getElementById('btnLetterNext'),
+            btnNo: document.getElementById('btnNo'),
+            btnYes: document.getElementById('btnYes'),
+            decisionVault: document.querySelector('.decision-vault')
+        };
 
         // 1. HIGH PERFORMANCE ORGANIC STARS SYSTEM
         function buildStarField() {
             const starContainer = document.getElementById('canvasStarField');
-            const totalStars = window.innerWidth < 768 ? 35 : 80;
+            if(!starContainer) return;
+            const totalStars = window.innerWidth < 768 ? 30 : 65; // Sedikit dikurangi untuk kestabilan RAM Mobile
+            const fragment = document.createDocumentFragment(); // Menggunakan Fragment agar append hanya 1x saja
             
             for (let i = 0; i < totalStars; i++) {
                 const node = document.createElement('div');
                 node.className = 'star';
                 node.style.left = Math.random() * 100 + '%';
                 node.style.top = Math.random() * 100 + '%';
-                const dynamicSize = Math.random() * 2 + 0.6;
+                const dynamicSize = Math.random() * 1.8 + 0.6;
                 node.style.width = dynamicSize + 'px';
                 node.style.height = dynamicSize + 'px';
                 node.style.setProperty('--duration', (Math.random() * 4 + 3) + 's');
-                starContainer.appendChild(node);
+                fragment.appendChild(node);
             }
+            starContainer.appendChild(fragment);
+            DOM.trackerStars = document.querySelectorAll('#masterTracker span');
         }
         window.addEventListener('DOMContentLoaded', buildStarField);
 
         // 2. AUDIO ARCHITECTURE SYSTEM
-        const audioNode = document.getElementById('bgMusic');
         let audioMuted = false;
-
         function toggleAudioSystem() {
             audioMuted = !audioMuted;
-            audioNode.muted = audioMuted;
-            const icon = document.getElementById('audioIcon');
+            DOM.audio.muted = audioMuted;
             
             if(audioMuted) {
-                icon.innerHTML = `<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>`;
+                DOM.audioIcon.innerHTML = `<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>`;
             } else {
-                icon.innerHTML = `<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>`;
+                DOM.audioIcon.innerHTML = `<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>`;
             }
         }
 
         // 3. MOTION DRIVEN STATE TRANSITION ENGINE
         let activeStageIndex = 1;
+        const flowMapping = { 1: 1, 2: 2, 5: 3, 4: 4, 3: 5, 6: 6, 7: 7 };
 
         function refreshProgressIndicator(index) {
-            const activeStars = document.querySelectorAll('#masterTracker span');
-            
-            const flowMapping = {
-                1: 1, // Password
-                2: 2, // A Token of Magic
-                5: 3, // Cerita
-                4: 4, // Digital Envelope
-                3: 5, // Video
-                6: 6, // YES/NO
-                7: 7  // Ending
-            };
-            
+            if(!DOM.trackerStars) return;
             const currentVisualStep = flowMapping[index] || 1;
 
-            activeStars.forEach((star, pos) => {
+            DOM.trackerStars.forEach((star, pos) => {
                 if (pos < currentVisualStep) {
                     star.textContent = '⭐';
                     star.classList.add('active');
@@ -998,7 +907,7 @@ Nanti ku kasih setengah... hehe. 🍦
 
             if(currentElement) {
                 currentElement.classList.remove('active');
-                setTimeout(() => { currentElement.style.display = 'none'; }, 1100);
+                setTimeout(() => { currentElement.style.style.display = 'none'; }, 1100);
             }
 
             setTimeout(() => {
@@ -1011,18 +920,22 @@ Nanti ku kasih setengah... hehe. 🍦
             }, 1150);
         }
 
-        // 4. STEP MODULAR LOGICS & SCRIPTS INTERCEPTOR
+        // 4. STEP MODULAR LOGICS & JUST-IN-TIME IFRAME LAUNCHER
         function triggerStageScripts(index) {
+            if (index === 4) {
+                // Saat pengguna masuk Bab 4 (Surat), kita cicil muat Iframe YouTube di latar belakang (JIT Pre-load)
+                if (DOM.iframe && !DOM.iframe.src) {
+                    DOM.iframe.src = "https://www.youtube.com/embed/_AaN4oXoNgQ?enablejsapi=1&rel=0&autoplay=1&mute=0&playsinline=1";
+                }
+            }
             if (index === 3) {
-                // Jeda musik latar agar tidak bentrok dengan suara video YouTube
-                audioNode.pause(); 
+                DOM.audio.pause(); 
             }
         }
 
         // Bab 1: Gatekeeper Action
         function validateGateway() {
-            const rawInput = document.getElementById('secretPass').value;
-            const logBox = document.getElementById('authErrorMsg');
+            const rawInput = DOM.secretInput.value;
             const humorousResponses = [
                 "Hmm.. kodenya belum klop nih, coba diingat lagi ya 🕵️",
                 "Akses belum terbuka! Apakah ada huruf yang keliru? 🤔",
@@ -1030,54 +943,40 @@ Nanti ku kasih setengah... hehe. 🍦
             ];
 
             if(rawInput.toLowerCase() === ENCRYPTED_KEY.toLowerCase()) {
-                logBox.style.opacity = 0;
-                audioNode.play().catch(() => console.log('Music engine context delayed due to system protection.'));
+                DOM.authError.style.opacity = 0;
+                DOM.audio.play().catch(() => console.log('Audio contextual safe policy delay.'));
                 shiftStage(2);
             } else {
-                logBox.textContent = humorousResponses[Math.floor(Math.random() * humorousResponses.length)];
-                logBox.style.opacity = 1;
+                DOM.authError.textContent = humorousResponses[Math.floor(Math.random() * humorousResponses.length)];
+                DOM.authError.style.opacity = 1;
             }
         }
 
         // ==========================================================================
         // SYSTEM LOGIC: 3D SLIDER INTERACTIVE
         // ==========================================================================
-        const sliderCards = document.querySelectorAll('.card-item');
-        const sliderDots = document.querySelectorAll('.dot');
-        const hintCard = document.getElementById('hintCard');
-        const btnCardNext = document.getElementById('btnCardNext');
-        const sliderStage = document.getElementById('sliderStage');
-
         let sliderIndex = 0;
         let startX = 0;
         let isDragging = false;
 
         function refreshSliderView() {
-            sliderCards.forEach((card, idx) => {
+            DOM.sliderCards.forEach((card, idx) => {
                 card.className = 'card-item'; 
-                
-                if (idx === sliderIndex) {
-                    card.classList.add('active');
-                } else if (idx === sliderIndex - 1) {
-                    card.classList.add('prev');
-                } else if (idx === sliderIndex + 1) {
-                    card.classList.add('next');
-                }
+                if (idx === sliderIndex) card.classList.add('active');
+                else if (idx === sliderIndex - 1) card.classList.add('prev');
+                else if (idx === sliderIndex + 1) card.classList.add('next');
             });
 
-            sliderDots.forEach((dot, idx) => {
+            DOM.sliderDots.forEach((dot, idx) => {
                 dot.classList.toggle('active', idx === sliderIndex);
             });
 
-            hintCard.innerText = `Geser kartu untuk melihat kartu-kartu yang lain (${sliderIndex + 1} / 6) 📖`;
-
-            if (sliderIndex === 5) {
-                btnCardNext.classList.remove('disabled');
-            }
+            DOM.hintCard.innerText = `Geser kartu untuk melihat kartu-kartu yang lain (${sliderIndex + 1} / 6) 📖`;
+            if (sliderIndex === 5) DOM.btnCardNext.classList.remove('disabled');
         }
 
         function executeNextSlide() {
-            if (sliderIndex < sliderCards.length - 1) {
+            if (sliderIndex < DOM.sliderCards.length - 1) {
                 sliderIndex++;
                 refreshSliderView();
             }
@@ -1090,36 +989,33 @@ Nanti ku kasih setengah... hehe. 🍦
             }
         }
 
-        sliderStage.addEventListener('mousedown', (e) => { startX = e.clientX; isDragging = true; });
-        sliderStage.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; });
+        DOM.sliderStage.addEventListener('mousedown', (e) => { startX = e.clientX; isDragging = true; });
+        // Ditambahkan opsi {passive: true} agar performa geser di mobile super mulus tanpa tersendat
+        DOM.sliderStage.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; }, { passive: true });
 
-        sliderStage.addEventListener('mouseup', (e) => { if (!isDragging) return; resolveDragEnd(e.clientX); });
-        sliderStage.addEventListener('touchend', (e) => { if (!isDragging) return; resolveDragEnd(e.changedTouches[0].clientX); });
+        DOM.sliderStage.addEventListener('mouseup', (e) => { if (!isDragging) return; resolveDragEnd(e.clientX); });
+        DOM.sliderStage.addEventListener('touchend', (e) => { if (!isDragging) return; resolveDragEnd(e.changedTouches[0].clientX); }, { passive: true });
 
         function resolveDragEnd(endX) {
             isDragging = false;
             const displacement = startX - endX;
-            if (displacement > 40) {
-                executeNextSlide(); 
-            } else if (displacement < -40) {
-                executePrevSlide(); 
-            }
+            if (displacement > 40) executeNextSlide(); 
+            else if (displacement < -40) executePrevSlide(); 
         }
 
         refreshSliderView();
 
-        // Bab 3: Intercept Media Action (YouTube Skip Handler)
+        // Bab 3: YouTube Skip Handler
         function interceptVideoPlayback() {
-            // Menghentikan video iframe dengan me-refresh isi src agar suaranya mati total
-            const iframe = document.getElementById('cinemaCore');
-            const currentSrc = iframe.src;
-            iframe.src = currentSrc; 
+            const currentSrc = DOM.iframe.src;
+            DOM.iframe.src = ''; // Putus stream secara instan
+            DOM.iframe.src = currentSrc; 
             
-            if (!audioMuted) audioNode.play().catch(() => {});
+            if (!audioMuted) DOM.audio.play().catch(() => {});
             shiftStage(6);
         }
 
-        // Bab 4: Structural Letter Typewriter System
+        // Bab 4: Typewriter Engine
         let typewriterActive = false;
         function releaseLetter() {
             const envNode = document.getElementById('envelopeSystem');
@@ -1135,60 +1031,57 @@ Nanti ku kasih setengah... hehe. 🍦
         const letterScriptBody = "22 September\n\nHappy Birthday Sep!\n\npanjang umur yaa, sehat selalu, murah rezekii, makin cantik dan gemoy hehe, semoga pekerjaan yang kam jalani sekarang menjadi pengalaman yang baik dan berarti untuk kehidupan ndu,\n\ndiberkati Tuhan km dan juga keluarga duu, kalau diberi kesempatan sama Tuhan, abg pengen bisa kenal lebih dekat lagi sama km dan keluarga besar ndu, apapun yg km doakan sekarang semoga di kabulkan Tuhan yaa,\n\nsemoga dapat sesuatu yang selalu kam ingini, selalu jadi alayy yaa, biar bisa km nikmati kehidupan ini tanpa perlu mikirin sudut pandang orang lain tentang bagaimana km menjalani hidup ndu,\n\njgn lupakan abg yg keren, cool dan ga alay ini yaa hehe.\n\nBahagia selaluuu seppp, selalu bersyukur yaa. Sekali lagi selamatt ulang tahun Tuhan memberkatimuuuu💫💫";
         
         function initiateTypewriterCore() {
-            const targetOutput = document.getElementById('typewriterWorkspace');
             let cursorPosition = 0;
+            const totalLength = letterScriptBody.length;
             
             function printChar() {
-                if(cursorPosition < letterScriptBody.length) {
-                    targetOutput.textContent += letterScriptBody.charAt(cursorPosition);
+                if(cursorPosition < totalLength) {
+                    DOM.typewriter.textContent += letterScriptBody.charAt(cursorPosition);
                     cursorPosition++;
+                    // Mengganti setTimeout rekursif statis ke requestAnimationFrame opsional jika ingin optimasi masa depan,
+                    // namun tetap mempertahankan ritme 30ms agar ketikan tidak terlalu cepat.
                     setTimeout(printChar, 30);
                 } else {
-                    const nextBtn = document.getElementById('btnLetterNext');
-                    nextBtn.style.display = 'inline-block';
+                    DOM.btnLetterNext.style.display = 'inline-block';
                 }
             }
             printChar();
         }
 
-        // Bab 6: Evade Mechanism Logic (Anti-Click)
+        // Bab 6: Evade Mechanism Logic (Optimized to avoid full page Layout Reflow)
         function evadeTactileNo() {
-            const noButton = document.getElementById('btnNo');
-            const boxContainer = document.querySelector('.decision-vault');
-            
-            const safeWidthLimit = boxContainer.clientWidth - noButton.clientWidth;
-            const safeHeightLimit = boxContainer.clientHeight - noButton.clientHeight;
+            const safeWidthLimit = DOM.decisionVault.clientWidth - DOM.btnNo.clientWidth;
+            const safeHeightLimit = DOM.decisionVault.clientHeight - DOM.btnNo.clientHeight;
             
             const calculatedX = Math.floor(Math.random() * safeWidthLimit);
             const calculatedY = Math.floor(Math.random() * safeHeightLimit);
             
-            noButton.style.left = calculatedX + 'px';
-            noButton.style.top = calculatedY + 'px';
-            noButton.style.transform = 'none';
+            // Penggunaan koordinat murni dikombinasikan dengan efek transform acak teroptimasi
+            DOM.btnNo.style.left = calculatedX + 'px';
+            DOM.btnNo.style.top = calculatedY + 'px';
             
             const visualTransforms = [
-                'scale(0.8) rotate(5deg)',
-                'scale(0.9) rotate(-6deg)',
-                'scale(0.75) rotate(12deg)'
+                'translate(0,0) scale(0.8) rotate(5deg)',
+                'translate(0,0) scale(0.9) rotate(-6deg)',
+                'translate(0,0) scale(0.75) rotate(12deg)'
             ];
-            noButton.style.transform = visualTransforms[Math.floor(Math.random() * visualTransforms.length)];
+            DOM.btnNo.style.transform = visualTransforms[Math.floor(Math.random() * visualTransforms.length)];
         }
 
-        // Bab 6: Tactile YES Progressive Expansion System
+        // Bab 6: Tactile YES Expansion
         let yesInteractionCounter = 0;
         function processTactileYes() {
-            const yesButton = document.getElementById('btnYes');
             yesInteractionCounter++;
             
             if(yesInteractionCounter === 1) {
-                yesButton.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                DOM.btnYes.style.transform = 'translate(-50%, -50%) scale(1.5)';
             } else if(yesInteractionCounter === 2) {
-                yesButton.style.transform = 'translate(-50%, -50%) scale(2.3)';
+                DOM.btnYes.style.transform = 'translate(-50%, -50%) scale(2.3)';
             } else if(yesInteractionCounter === 3) {
-                yesButton.style.transform = 'translate(-50%, -50%) scale(3.5)';
+                DOM.btnYes.style.transform = 'translate(-50%, -50%) scale(3.5)';
             } else if(yesInteractionCounter >= 4) {
-                yesButton.style.display = 'none';
-                document.getElementById('btnNo').style.display = 'none';
+                DOM.btnYes.style.display = 'none';
+                DOM.btnNo.style.display = 'none';
                 
                 generateCelebrationGala();
                 setTimeout(() => { shiftStage(7); }, 500);
@@ -1198,7 +1091,8 @@ Nanti ku kasih setengah... hehe. 🍦
         // 5. CELEBRATION DISPATCHER MATRIX ENGINE
         function generateCelebrationGala() {
             const galaAssets = ['🎈', '✨', '🎉', '💖', '💥', '⭐'];
-            const productionVolume = 65;
+            const productionVolume = 55; // Dioptimalkan sedikit agar FPS di HP spek rendah tidak drop mendadak
+            const targetBody = document.body;
             
             for (let i = 0; i < productionVolume; i++) {
                 setTimeout(() => {
@@ -1212,9 +1106,9 @@ Nanti ku kasih setengah... hehe. 🍦
                     dynamicElement.style.setProperty('--drift', (Math.random() * 240 - 120) + 'px');
                     dynamicElement.style.setProperty('--spin', (Math.random() * 720) + 'deg');
                     
-                    document.body.appendChild(dynamicElement);
+                    targetBody.appendChild(dynamicElement);
                     setTimeout(() => { dynamicElement.remove(); }, 6000);
-                }, i * 55);
+                }, i * 45);
             }
         }
     </script>
