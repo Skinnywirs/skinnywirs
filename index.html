@@ -831,7 +831,7 @@
             audio: document.getElementById('bgMusic'),
             audioIcon: document.getElementById('audioIcon'),
             iframe: document.getElementById('cinemaCore'),
-            trackerStars: null, // Diisi dinamis pas DOM selesai dimuat
+            trackerStars: null, 
             secretInput: document.getElementById('secretPass'),
             authError: document.getElementById('authErrorMsg'),
             sliderCards: document.querySelectorAll('.card-item'),
@@ -850,8 +850,8 @@
         function buildStarField() {
             const starContainer = document.getElementById('canvasStarField');
             if(!starContainer) return;
-            const totalStars = window.innerWidth < 768 ? 30 : 65; // Sedikit dikurangi untuk kestabilan RAM Mobile
-            const fragment = document.createDocumentFragment(); // Menggunakan Fragment agar append hanya 1x saja
+            const totalStars = window.innerWidth < 768 ? 30 : 65; 
+            const fragment = document.createDocumentFragment(); 
             
             for (let i = 0; i < totalStars; i++) {
                 const node = document.createElement('div');
@@ -907,7 +907,7 @@
 
             if(currentElement) {
                 currentElement.classList.remove('active');
-                setTimeout(() => { currentElement.style.style.display = 'none'; }, 1100);
+                setTimeout(() => { currentElement.style.display = 'none'; }, 1100);
             }
 
             setTimeout(() => {
@@ -923,7 +923,7 @@
         // 4. STEP MODULAR LOGICS & JUST-IN-TIME IFRAME LAUNCHER
         function triggerStageScripts(index) {
             if (index === 4) {
-                // Saat pengguna masuk Bab 4 (Surat), kita cicil muat Iframe YouTube di latar belakang (JIT Pre-load)
+                // Pre-loading cerdas: Menyisipkan URL video baru Anda secara asinkron saat user di Bab 4
                 if (DOM.iframe && !DOM.iframe.src) {
                     DOM.iframe.src = "https://www.youtube.com/embed/_AaN4oXoNgQ?enablejsapi=1&rel=0&autoplay=1&mute=0&playsinline=1";
                 }
@@ -990,7 +990,6 @@
         }
 
         DOM.sliderStage.addEventListener('mousedown', (e) => { startX = e.clientX; isDragging = true; });
-        // Ditambahkan opsi {passive: true} agar performa geser di mobile super mulus tanpa tersendat
         DOM.sliderStage.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; }, { passive: true });
 
         DOM.sliderStage.addEventListener('mouseup', (e) => { if (!isDragging) return; resolveDragEnd(e.clientX); });
@@ -1008,7 +1007,7 @@
         // Bab 3: YouTube Skip Handler
         function interceptVideoPlayback() {
             const currentSrc = DOM.iframe.src;
-            DOM.iframe.src = ''; // Putus stream secara instan
+            DOM.iframe.src = ''; 
             DOM.iframe.src = currentSrc; 
             
             if (!audioMuted) DOM.audio.play().catch(() => {});
@@ -1038,8 +1037,6 @@
                 if(cursorPosition < totalLength) {
                     DOM.typewriter.textContent += letterScriptBody.charAt(cursorPosition);
                     cursorPosition++;
-                    // Mengganti setTimeout rekursif statis ke requestAnimationFrame opsional jika ingin optimasi masa depan,
-                    // namun tetap mempertahankan ritme 30ms agar ketikan tidak terlalu cepat.
                     setTimeout(printChar, 30);
                 } else {
                     DOM.btnLetterNext.style.display = 'inline-block';
@@ -1056,7 +1053,6 @@
             const calculatedX = Math.floor(Math.random() * safeWidthLimit);
             const calculatedY = Math.floor(Math.random() * safeHeightLimit);
             
-            // Penggunaan koordinat murni dikombinasikan dengan efek transform acak teroptimasi
             DOM.btnNo.style.left = calculatedX + 'px';
             DOM.btnNo.style.top = calculatedY + 'px';
             
@@ -1091,7 +1087,7 @@
         // 5. CELEBRATION DISPATCHER MATRIX ENGINE
         function generateCelebrationGala() {
             const galaAssets = ['🎈', '✨', '🎉', '💖', '💥', '⭐'];
-            const productionVolume = 55; // Dioptimalkan sedikit agar FPS di HP spek rendah tidak drop mendadak
+            const productionVolume = 55; 
             const targetBody = document.body;
             
             for (let i = 0; i < productionVolume; i++) {
