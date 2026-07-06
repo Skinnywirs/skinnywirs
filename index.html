@@ -69,7 +69,7 @@
             z-index: 1;
             overflow: hidden;
             pointer-events: none;
-            contain: strict; 
+            contain: strict; /* Mengisolasi background dari perubahan layout halaman utama */
         }
 
         .moon-glow {
@@ -82,7 +82,7 @@
             border-radius: 50%;
             filter: drop-shadow(0 0 40px rgba(255, 213, 79, 0.4));
             animation: pulseMoon 10s var(--ease-elegant) infinite alternate;
-            will-change: transform, opacity; 
+            will-change: transform, opacity; /* Optimalisasi GPU Compositing */
             transform: translateZ(0);
         }
 
@@ -450,55 +450,6 @@
             width: 100%;
             height: 100%;
             border: none;
-            display: none; /* Disembunyikan dulu agar tidak berat saat loading halaman awal */
-        }
-
-        /* TAMPILAN PLAY CARD MANUAL (SOLUSI B) */
-        .video-placeholder-trigger {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #0A1931 0%, #15305B 100%);
-            cursor: pointer;
-            z-index: 5;
-            transition: opacity 0.5s ease;
-        }
-
-        .play-icon-circle {
-            width: 65px;
-            height: 65px;
-            background: var(--accent-gold);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 30px rgba(255, 213, 79, 0.4);
-            margin-bottom: 15px;
-            transition: transform 0.3s ease;
-        }
-
-        .video-placeholder-trigger:hover .play-icon-circle {
-            transform: scale(1.1);
-        }
-
-        .play-icon-circle svg {
-            width: 24px;
-            height: 24px;
-            fill: #07152F;
-            margin-left: 4px;
-        }
-
-        .video-placeholder-trigger p {
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            color: var(--cream);
-            opacity: 0.9;
         }
 
         .btn-skip-video {
@@ -847,15 +798,8 @@
         <section id="bab3" class="bab-container">
             <h1 class="heading-magical" style="font-size: 2rem; margin-bottom: 25px;">A Little Gift</h1>
             <div class="video-viewport">
-                <div class="video-placeholder-trigger" id="videoCover" onclick="startManualVideoPlayback()">
-                    <div class="play-icon-circle">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
-                    </div>
-                    <p>Klik Untuk Memutar Video ✨</p>
-                </div>
-                <iframe id="cinemaCore" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <!-- LINK EMBED VIDEO YOUTUBE KAMU SUDAH TERPASANG SEMPURNA DISINI -->
+                <iframe id="cinemaCore" src="https://www.youtube.com/embed/_AaN4oXoNgQ?enablejsapi=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 <button class="btn-skip-video" onclick="interceptVideoPlayback()">Skip</button>
             </div>
         </section>
@@ -883,11 +827,11 @@
     <script>
         const ENCRYPTED_KEY = "magic"; 
         
+        // DOM Cache Registry untuk Menghindari Re-Querying Berulang
         const DOM = {
             audio: document.getElementById('bgMusic'),
             audioIcon: document.getElementById('audioIcon'),
             iframe: document.getElementById('cinemaCore'),
-            videoCover: document.getElementById('videoCover'),
             trackerStars: null, 
             secretInput: document.getElementById('secretPass'),
             authError: document.getElementById('authErrorMsg'),
@@ -903,6 +847,7 @@
             decisionVault: document.querySelector('.decision-vault')
         };
 
+        // 1. HIGH PERFORMANCE ORGANIC STARS SYSTEM
         function buildStarField() {
             const starContainer = document.getElementById('canvasStarField');
             if(!starContainer) return;
@@ -925,6 +870,7 @@
         }
         window.addEventListener('DOMContentLoaded', buildStarField);
 
+        // 2. AUDIO ARCHITECTURE SYSTEM
         let audioMuted = false;
         function toggleAudioSystem() {
             audioMuted = !audioMuted;
@@ -937,6 +883,7 @@
             }
         }
 
+        // 3. MOTION DRIVEN STATE TRANSITION ENGINE
         let activeStageIndex = 1;
         const flowMapping = { 1: 1, 2: 2, 5: 3, 4: 4, 3: 5, 6: 6, 7: 7 };
 
@@ -974,24 +921,20 @@
             }, 1150);
         }
 
+        // 4. STEP MODULAR LOGICS & JUST-IN-TIME IFRAME LAUNCHER
         function triggerStageScripts(index) {
+            if (index === 4) {
+                // LINK EMBED VIDEO YOUTUBE KAMU DI SINI JUGA SUDAH SIAP SECARA JAVASCRIPT
+                if (DOM.iframe && !DOM.iframe.src) {
+                    DOM.iframe.src = "https://www.youtube.com/embed/_AaN4oXoNgQ?enablejsapi=1&rel=0";
+                }
+            }
             if (index === 3) {
                 DOM.audio.pause(); 
             }
         }
 
-        // FUNGSI UTAMA SOLUSI B: MEMICU MEMORI STREAMING INSTAN SAAT USER INTERAKSI KLIK MANUAL
-        function startManualVideoPlayback() {
-            if (DOM.iframe) {
-                DOM.iframe.src = "https://www.youtube.com/embed/_AaN4oXoNgQ?autoplay=1&enablejsapi=1&rel=0";
-                DOM.iframe.style.display = "block";
-            }
-            if (DOM.videoCover) {
-                DOM.videoCover.style.opacity = "0";
-                setTimeout(() => { DOM.videoCover.style.display = "none"; }, 500);
-            }
-        }
-
+        // Bab 1: Gatekeeper Action
         function validateGateway() {
             const rawInput = DOM.secretInput.value;
             const humorousResponses = [
@@ -1002,7 +945,7 @@
 
             if(rawInput.toLowerCase() === ENCRYPTED_KEY.toLowerCase()) {
                 DOM.authError.style.opacity = 0;
-                DOM.audio.play().catch(() => console.log('Audio safe policy delayed.'));
+                DOM.audio.play().catch(() => console.log('Audio contextual safe policy delay.'));
                 shiftStage(2);
             } else {
                 DOM.authError.textContent = humorousResponses[Math.floor(Math.random() * humorousResponses.length)];
@@ -1010,6 +953,9 @@
             }
         }
 
+        // ==========================================================================
+        // SYSTEM LOGIC: 3D SLIDER INTERACTIVE
+        // ==========================================================================
         let sliderIndex = 0;
         let startX = 0;
         let isDragging = false;
@@ -1059,6 +1005,7 @@
 
         refreshSliderView();
 
+        // Bab 3: YouTube Skip Handler
         function interceptVideoPlayback() {
             const currentSrc = DOM.iframe.src;
             DOM.iframe.src = ''; 
@@ -1068,6 +1015,7 @@
             shiftStage(6);
         }
 
+        // Bab 4: Typewriter Engine
         let typewriterActive = false;
         function releaseLetter() {
             const envNode = document.getElementById('envelopeSystem');
@@ -1098,6 +1046,7 @@
             printChar();
         }
 
+        // Bab 6: Evade Mechanism Logic (Optimized to avoid full page Layout Reflow)
         function evadeTactileNo() {
             const safeWidthLimit = DOM.decisionVault.clientWidth - DOM.btnNo.clientWidth;
             const safeHeightLimit = DOM.decisionVault.clientHeight - DOM.btnNo.clientHeight;
@@ -1116,6 +1065,7 @@
             DOM.btnNo.style.transform = visualTransforms[Math.floor(Math.random() * visualTransforms.length)];
         }
 
+        // Bab 6: Tactile YES Expansion
         let yesInteractionCounter = 0;
         function processTactileYes() {
             yesInteractionCounter++;
@@ -1135,6 +1085,7 @@
             }
         }
 
+        // 5. CELEBRATION DISPATCHER MATRIX ENGINE
         function generateCelebrationGala() {
             const galaAssets = ['🎈', '✨', '🎉', '💖', '💥', '⭐'];
             const productionVolume = 55; 
