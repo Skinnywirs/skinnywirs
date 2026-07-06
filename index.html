@@ -450,6 +450,55 @@
             width: 100%;
             height: 100%;
             border: none;
+            display: none; /* Disembunyikan dulu agar tidak berat saat loading halaman awal */
+        }
+
+        /* TAMPILAN PLAY CARD MANUAL (SOLUSI B) */
+        .video-placeholder-trigger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0A1931 0%, #15305B 100%);
+            cursor: pointer;
+            z-index: 5;
+            transition: opacity 0.5s ease;
+        }
+
+        .play-icon-circle {
+            width: 65px;
+            height: 65px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 30px rgba(255, 213, 79, 0.4);
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .video-placeholder-trigger:hover .play-icon-circle {
+            transform: scale(1.1);
+        }
+
+        .play-icon-circle svg {
+            width: 24px;
+            height: 24px;
+            fill: #07152F;
+            margin-left: 4px;
+        }
+
+        .video-placeholder-trigger p {
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--cream);
+            opacity: 0.9;
         }
 
         .btn-skip-video {
@@ -798,7 +847,15 @@
         <section id="bab3" class="bab-container">
             <h1 class="heading-magical" style="font-size: 2rem; margin-bottom: 25px;">A Little Gift</h1>
             <div class="video-viewport">
-                <iframe id="cinemaCore" src="https://www.youtube.com/embed/_AaN4oXoNgQ?autoplay=1&mute=1&enablejsapi=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <div class="video-placeholder-trigger" id="videoCover" onclick="startManualVideoPlayback()">
+                    <div class="play-icon-circle">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                    <p>Klik Untuk Memutar Video ✨</p>
+                </div>
+                <iframe id="cinemaCore" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 <button class="btn-skip-video" onclick="interceptVideoPlayback()">Skip</button>
             </div>
         </section>
@@ -830,6 +887,7 @@
             audio: document.getElementById('bgMusic'),
             audioIcon: document.getElementById('audioIcon'),
             iframe: document.getElementById('cinemaCore'),
+            videoCover: document.getElementById('videoCover'),
             trackerStars: null, 
             secretInput: document.getElementById('secretPass'),
             authError: document.getElementById('authErrorMsg'),
@@ -918,11 +976,19 @@
 
         function triggerStageScripts(index) {
             if (index === 3) {
-                // OPTIMASI: MEMASTIKAN IFRAME MEMBAWA ATRIBUT AUTOPLAY SEJAK AWAL DIPICU JAVASCRIPT
-                if (DOM.iframe && !DOM.iframe.src) {
-                    DOM.iframe.src = "https://www.youtube.com/embed/_AaN4oXoNgQ?autoplay=1&mute=1&enablejsapi=1&rel=0";
-                }
                 DOM.audio.pause(); 
+            }
+        }
+
+        // FUNGSI UTAMA SOLUSI B: MEMICU MEMORI STREAMING INSTAN SAAT USER INTERAKSI KLIK MANUAL
+        function startManualVideoPlayback() {
+            if (DOM.iframe) {
+                DOM.iframe.src = "https://www.youtube.com/embed/_AaN4oXoNgQ?autoplay=1&enablejsapi=1&rel=0";
+                DOM.iframe.style.display = "block";
+            }
+            if (DOM.videoCover) {
+                DOM.videoCover.style.opacity = "0";
+                setTimeout(() => { DOM.videoCover.style.display = "none"; }, 500);
             }
         }
 
