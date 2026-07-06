@@ -69,7 +69,7 @@
             z-index: 1;
             overflow: hidden;
             pointer-events: none;
-            contain: strict; /* Mengisolasi background dari perubahan layout halaman utama */
+            contain: strict; 
         }
 
         .moon-glow {
@@ -82,7 +82,7 @@
             border-radius: 50%;
             filter: drop-shadow(0 0 40px rgba(255, 213, 79, 0.4));
             animation: pulseMoon 10s var(--ease-elegant) infinite alternate;
-            will-change: transform, opacity; /* Optimalisasi GPU Compositing */
+            will-change: transform, opacity; 
             transform: translateZ(0);
         }
 
@@ -798,8 +798,7 @@
         <section id="bab3" class="bab-container">
             <h1 class="heading-magical" style="font-size: 2rem; margin-bottom: 25px;">A Little Gift</h1>
             <div class="video-viewport">
-                <!-- LINK EMBED VIDEO YOUTUBE KAMU SUDAH TERPASANG SEMPURNA DISINI -->
-                <iframe id="cinemaCore" src="https://www.youtube.com/embed/_AaN4oXoNgQ?enablejsapi=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <iframe id="cinemaCore" src="https://www.youtube.com/embed/_AaN4oXoNgQ?autoplay=1&mute=1&enablejsapi=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 <button class="btn-skip-video" onclick="interceptVideoPlayback()">Skip</button>
             </div>
         </section>
@@ -827,7 +826,6 @@
     <script>
         const ENCRYPTED_KEY = "magic"; 
         
-        // DOM Cache Registry untuk Menghindari Re-Querying Berulang
         const DOM = {
             audio: document.getElementById('bgMusic'),
             audioIcon: document.getElementById('audioIcon'),
@@ -847,7 +845,6 @@
             decisionVault: document.querySelector('.decision-vault')
         };
 
-        // 1. HIGH PERFORMANCE ORGANIC STARS SYSTEM
         function buildStarField() {
             const starContainer = document.getElementById('canvasStarField');
             if(!starContainer) return;
@@ -870,7 +867,6 @@
         }
         window.addEventListener('DOMContentLoaded', buildStarField);
 
-        // 2. AUDIO ARCHITECTURE SYSTEM
         let audioMuted = false;
         function toggleAudioSystem() {
             audioMuted = !audioMuted;
@@ -883,7 +879,6 @@
             }
         }
 
-        // 3. MOTION DRIVEN STATE TRANSITION ENGINE
         let activeStageIndex = 1;
         const flowMapping = { 1: 1, 2: 2, 5: 3, 4: 4, 3: 5, 6: 6, 7: 7 };
 
@@ -921,20 +916,16 @@
             }, 1150);
         }
 
-        // 4. STEP MODULAR LOGICS & JUST-IN-TIME IFRAME LAUNCHER
         function triggerStageScripts(index) {
-            if (index === 4) {
-                // LINK EMBED VIDEO YOUTUBE KAMU DI SINI JUGA SUDAH SIAP SECARA JAVASCRIPT
-                if (DOM.iframe && !DOM.iframe.src) {
-                    DOM.iframe.src = "https://www.youtube.com/embed/_AaN4oXoNgQ?enablejsapi=1&rel=0";
-                }
-            }
             if (index === 3) {
+                // OPTIMASI: MEMASTIKAN IFRAME MEMBAWA ATRIBUT AUTOPLAY SEJAK AWAL DIPICU JAVASCRIPT
+                if (DOM.iframe && !DOM.iframe.src) {
+                    DOM.iframe.src = "https://www.youtube.com/embed/_AaN4oXoNgQ?autoplay=1&mute=1&enablejsapi=1&rel=0";
+                }
                 DOM.audio.pause(); 
             }
         }
 
-        // Bab 1: Gatekeeper Action
         function validateGateway() {
             const rawInput = DOM.secretInput.value;
             const humorousResponses = [
@@ -945,7 +936,7 @@
 
             if(rawInput.toLowerCase() === ENCRYPTED_KEY.toLowerCase()) {
                 DOM.authError.style.opacity = 0;
-                DOM.audio.play().catch(() => console.log('Audio contextual safe policy delay.'));
+                DOM.audio.play().catch(() => console.log('Audio safe policy delayed.'));
                 shiftStage(2);
             } else {
                 DOM.authError.textContent = humorousResponses[Math.floor(Math.random() * humorousResponses.length)];
@@ -953,9 +944,6 @@
             }
         }
 
-        // ==========================================================================
-        // SYSTEM LOGIC: 3D SLIDER INTERACTIVE
-        // ==========================================================================
         let sliderIndex = 0;
         let startX = 0;
         let isDragging = false;
@@ -1005,7 +993,6 @@
 
         refreshSliderView();
 
-        // Bab 3: YouTube Skip Handler
         function interceptVideoPlayback() {
             const currentSrc = DOM.iframe.src;
             DOM.iframe.src = ''; 
@@ -1015,7 +1002,6 @@
             shiftStage(6);
         }
 
-        // Bab 4: Typewriter Engine
         let typewriterActive = false;
         function releaseLetter() {
             const envNode = document.getElementById('envelopeSystem');
@@ -1046,7 +1032,6 @@
             printChar();
         }
 
-        // Bab 6: Evade Mechanism Logic (Optimized to avoid full page Layout Reflow)
         function evadeTactileNo() {
             const safeWidthLimit = DOM.decisionVault.clientWidth - DOM.btnNo.clientWidth;
             const safeHeightLimit = DOM.decisionVault.clientHeight - DOM.btnNo.clientHeight;
@@ -1065,7 +1050,6 @@
             DOM.btnNo.style.transform = visualTransforms[Math.floor(Math.random() * visualTransforms.length)];
         }
 
-        // Bab 6: Tactile YES Expansion
         let yesInteractionCounter = 0;
         function processTactileYes() {
             yesInteractionCounter++;
@@ -1085,7 +1069,6 @@
             }
         }
 
-        // 5. CELEBRATION DISPATCHER MATRIX ENGINE
         function generateCelebrationGala() {
             const galaAssets = ['🎈', '✨', '🎉', '💖', '💥', '⭐'];
             const productionVolume = 55; 
