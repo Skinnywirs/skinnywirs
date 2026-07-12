@@ -469,6 +469,25 @@
             border-color: var(--white);
         }
 
+        /* Teks Informasi Tambahan untuk Halaman Video (Bab 3) */
+        .video-notice-text {
+            font-size: 0.82rem;
+            color: var(--cream);
+            opacity: 0.55;
+            max-width: 520px;
+            line-height: 1.6;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            animation: fadeInNotice 1.5s var(--ease-elegant) forwards;
+        }
+
+        @keyframes fadeInNotice {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 0.55; transform: translateY(0); }
+        }
+
         /* ==========================================================================
            8. BAB 4: DIGITAL ENVELOPE ENGINEERING
            ========================================================================== */
@@ -656,6 +675,7 @@
             .book-scroller { max-height: 240px; font-size: 0.88rem; }
             #btnYes { left: 20%; }
             #btnNo { right: 20%; }
+            .video-notice-text { font-size: 0.78rem; max-width: 90%; margin-top: 15px; }
         }
 
         @media (max-width: 480px) {
@@ -698,12 +718,12 @@
 
         <section id="bab1" class="bab-container active">
             <h1 class="heading-magical">September</h1>
-            <p class="text-narrative">"Every beautiful story has a beginning. This one starts in September"</p>
+            <p class="text-narrative">"Somewhere between the days of September, a beautiful journey began"</p>
             <div class="gatekeeper-ui">
                 <input type="password" id="secretPass" placeholder="Masukkan Password...">
                 <div class="error-log" id="authErrorMsg"></div>
             </div>
-            <button class="btn-premium" onclick="validateGateway()"> Buka Website ✨</button>
+            <button class="btn-premium" onclick="validateGateway()"> Buka Website </button>
         </section>
 
         <section id="bab2" class="bab-container">
@@ -867,7 +887,7 @@ Lumayan tau... gratis. WKWKWK.
 <p>
 Kalau kam mau juga...
 Kabarin aja.
-Nanti ku kasih setengah... hehe. 🍦
+Nanti ku kasih setengah... hehe. 
 </p>
                 </div>
             </div>
@@ -888,10 +908,14 @@ Nanti ku kasih setengah... hehe. 🍦
         <section id="bab3" class="bab-container">
             <h1 class="heading-magical" style="font-size: 2rem; margin-bottom: 25px;">A Little Gift</h1>
             <div class="video-viewport">
-                <!-- TEMPAT LINK VIDEO YOUTUBE ANDA -->
                 <iframe id="cinemaCore" src="https://www.youtube.com/embed/_AaN4oXoNgQ?enablejsapi=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 <button class="btn-skip-video" onclick="interceptVideoPlayback()">Skip</button>
             </div>
+            
+            <p class="video-notice-text">
+                Video membutuhkan sedikit waktu untuk diputar.<br>
+                Jika pemutaran terasa kurang lancar, kamu dapat membukanya langsung melalui logo YouTube yang tertera pada video.
+            </p>
         </section>
 
         <section id="bab6" class="bab-container">
@@ -910,7 +934,7 @@ Nanti ku kasih setengah... hehe. 🍦
                 Terima kasih sudah meluangkan waktu untuk membuka hadiah kecil ini.
             </p>
             <p class="text-narrative" style="text-align: center; font-size: 0.9rem; opacity: 0.6; margin-bottom: 15px; width: 100%;">
-                Semoga senyummu hari ini menjadi salah satu kenangan yang selalu kamu ingat.
+                Semoga senyummu hari ini menjadi salah satu kenangan yang selalu kamu ingat yaa.
             </p>
            
             <p class="text-narrative" style="text-align: center; font-size: 0.9rem; opacity: 0.6; margin-bottom: 25px; width: 100%;">
@@ -1136,7 +1160,7 @@ Nanti ku kasih setengah... hehe. 🍦
             }
         }
 
-        const letterScriptBody = "22 September\n\nHappy Birthday Sep!\n\npanjang umur yaa, sehat selalu, murah rezekii, makin cantik dan gemoy hehe, semoga pekerjaan yang kam jalani sekarang menjadi pengalaman yang baik dan berarti untuk kehidupan ndu,\n\ndiberkati Tuhan km dan juga keluarga duu, kalau diberi kesempatan sama Tuhan, abg pengen bisa kenal lebih dekat lagi sama km dan keluarga besar ndu, apapun yg km doakan sekarang semoga di kabulkan Tuhan yaa,\n\nsemoga dapat sesuatu yang selalu kam ingini, selalu jadi alayy yaa, biar bisa km nikmati kehidupan ini tanpa perlu mikirin sudut pandang orang lain tentang bagaimana km menjalani hidup ndu,\n\njgn lupakan abg yg keren, cool dan ga alay ini yaa hehe.\n\nBahagia selaluuu seppp, selalu bersyukur yaa. Sekali lagi selamatt ulang tahun Tuhan memberkatimuuuu💫💫";
+        const letterScriptBody = "22 September\n\nHappy Birthday Sep!\n\npanjang umur yaa, sehat selalu, murah rezekii, makin cantik dan gemoy hehe, semoga pekerjaan yang kam jalani sekarang menjadi pengalaman yang baik dan berarti untuk kehidupan ndu,\n\ndiberkati Tuhan kam dan juga keluarga ndu, kalau diberi kesempatan sama Tuhan, abg pengen bisa kenal lebih dekat lagi sama kam dan keluarga besar ndu, apapun yg kam doakan sekarang semoga di kabulkan Tuhan yaa,\n\nsemoga bisa dapat sesuatu yang selalu kam ingini, selalu jadi alayy yaa, biar bisa kam nikmati kehidupan ini tanpa perlu mikirin sudut pandang orang lain tentang bagaimana kam menjalani hidup ndu,\n\njgn lupakan abg yg keren, cool dan ga alay ini yaa hehe.\n\nBahagia selaluuu seppp, selalu bersyukur yaa. Sekali lagi selamatt ulang tahun, Tuhan memberkatimuuuu💫💫";
         
         function initiateTypewriterCore() {
             const targetOutput = document.getElementById('typewriterWorkspace');
